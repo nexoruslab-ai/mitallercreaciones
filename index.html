@@ -257,19 +257,41 @@ nav{
 
 /* Contadores hero */
 .hero-stats{
-  display:flex;gap:40px;justify-content:center;
-  padding-top:32px;border-top:1px solid var(--bl);
+  display:flex;gap:28px;justify-content:center;
+  padding-top:28px;border-top:1px solid var(--bl);
   animation:fadeUp 0.9s ease 1.15s both;
-  flex-wrap:wrap;
+  flex-wrap:nowrap;align-items:flex-start;
 }
-.hero-stat{text-align:center;}
+.hero-stat{text-align:center;flex-shrink:0;}
 .hero-stat-n{
-  font-family:'Cormorant',serif;font-size:clamp(28px,5vw,42px);
+  font-family:'Cormorant',serif;font-size:clamp(24px,4vw,38px);
   font-weight:500;color:var(--dk);line-height:1;
 }
 .hero-stat-l{
-  font-size:10px;letter-spacing:0.3em;color:var(--tp);
+  font-size:9px;letter-spacing:0.22em;color:var(--tp);
   text-transform:uppercase;font-weight:400;margin-top:4px;
+  white-space:nowrap;
+}
+/* Separador vertical entre stats */
+.hero-stat-sep{
+  width:1px;height:40px;background:var(--bl);
+  align-self:center;flex-shrink:0;opacity:0.6;
+}
+
+/* Pill de ubicación + envíos */
+.hero-location{
+  display:flex;gap:12px;justify-content:center;align-items:center;
+  flex-wrap:wrap;margin-bottom:28px;
+  animation:fadeUp 0.9s ease 0.65s both;
+}
+.hero-loc-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(92,32,64,0.07);border:1px solid var(--bl);
+  border-radius:40px;padding:6px 14px;
+  font-size:10px;letter-spacing:0.2em;color:var(--dm);font-weight:500;
+}
+.hero-loc-pill.shipping{
+  background:rgba(92,32,64,0.04);
 }
 
 /* Ticker de servicios */
@@ -897,6 +919,12 @@ footer{
       </div>
     </div>
 
+    <!-- Ubicación + envíos -->
+    <div class="hero-location">
+      <span class="hero-loc-pill">📍 General Pico, La Pampa</span>
+      <span class="hero-loc-pill shipping">📦 Envíos a todo el país · Correo Argentino</span>
+    </div>
+
     <div class="hero-ctas">
       <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20quiero%20reservar%20mi%20consulta%20sin%20cargo.%20%C2%BFTen%C3%A9s%20turnos%20disponibles%3F" target="_blank" rel="noopener" class="btn-primary">
         Reservar Ahora · Gratis
@@ -913,14 +941,17 @@ footer{
         <div class="hero-stat-n" data-target="500">0</div>
         <div class="hero-stat-l">Clientas Felices</div>
       </div>
+      <div class="hero-stat-sep"></div>
       <div class="hero-stat">
         <div class="hero-stat-n" data-target="15">0</div>
         <div class="hero-stat-l">Años de Experiencia</div>
       </div>
+      <div class="hero-stat-sep"></div>
       <div class="hero-stat">
         <div class="hero-stat-n">100%</div>
         <div class="hero-stat-l">Satisfacción garantizada</div>
       </div>
+      <div class="hero-stat-sep"></div>
       <div class="hero-stat">
         <div class="hero-stat-n">∞</div>
         <div class="hero-stat-l">Amor en cada prenda</div>
@@ -939,18 +970,22 @@ footer{
     <div class="hero-ticker-inner">
       <span class="hero-ticker-item">Alta Costura</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Vestidos de Novia</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Egresos &amp; Fiestas</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Vestuario de Danza</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Trajes y Camisas</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Arreglos Profesionales</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Blanquería del Hogar</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Disfraces y Fantasía</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Ropa Deportiva</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Folklore · Tango · Bachata</span><span class="hero-ticker-dot">·</span>
       <!-- duplicate for seamless loop -->
       <span class="hero-ticker-item">Alta Costura</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Vestidos de Novia</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Egresos &amp; Fiestas</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Vestuario de Danza</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Trajes y Camisas</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Arreglos Profesionales</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Blanquería del Hogar</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Disfraces y Fantasía</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Ropa Deportiva</span><span class="hero-ticker-dot">·</span>
       <span class="hero-ticker-item">Folklore · Tango · Bachata</span><span class="hero-ticker-dot">·</span>
@@ -998,9 +1033,9 @@ footer{
       <div class="service-card reveal">
         <span class="service-icon">👗</span>
         <h3 class="service-name">Alta Costura</h3>
-        <p class="service-desc">Vestidos de novia, trajes de gala, disfraces y vestuario especial. Cada pieza diseñada y confeccionada a medida, pensada para que brillés en el momento más importante.</p>
+        <p class="service-desc">Vestidos de novia, trajes de gala, egresos, fiestas y vestuario especial. Cada pieza diseñada y confeccionada a medida, pensada para que brillés en el momento más importante.</p>
         <div class="service-tags">
-          <span class="tag">Novia</span><span class="tag">Gala</span><span class="tag">XV Años</span><span class="tag">Eventos</span>
+          <span class="tag">Novia</span><span class="tag">Gala</span><span class="tag">XV Años</span><span class="tag">Egresos</span><span class="tag">Fiestas</span><span class="tag">Eventos</span>
         </div>
         <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20quiero%20consultar%20sobre%20alta%20costura%20y%20vestido%20a%20medida." target="_blank" rel="noopener" class="service-cta">
           Consultar sin cargo →
@@ -1022,9 +1057,9 @@ footer{
       <div class="service-card reveal reveal-d2">
         <span class="service-icon">✂️</span>
         <h3 class="service-name">Arreglos Profesionales</h3>
-        <p class="service-desc">Ruedos, cierres, botones, costuras y todo tipo de arreglo. Trabajo prolijo, rápido y al precio justo. Tu ropa favorita, como nueva.</p>
+        <p class="service-desc">Ruedos, cierres, botones, costuras, blanquería del hogar y todo tipo de arreglo. Trabajo prolijo, rápido y al precio justo. Tu ropa favorita, como nueva.</p>
         <div class="service-tags">
-          <span class="tag">Ruedos</span><span class="tag">Cierres</span><span class="tag">Botones</span><span class="tag">Costuras</span>
+          <span class="tag">Ruedos</span><span class="tag">Cierres</span><span class="tag">Botones</span><span class="tag">Costuras</span><span class="tag">Blanquería</span>
         </div>
         <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20necesito%20un%20arreglo%20en%20una%20prenda.%20%C2%BFC%C3%B3mo%20funciona%3F" target="_blank" rel="noopener" class="service-cta">
           Consultar sin cargo →
@@ -1654,8 +1689,9 @@ footer{
       <div class="footer-col-title">Servicios</div>
       <ul class="footer-links">
         <li><a href="#servicios">Alta Costura</a></li>
+        <li><a href="#servicios">Egresos &amp; Fiestas</a></li>
         <li><a href="#servicios">Danza &amp; Espectáculo</a></li>
-        <li><a href="#servicios">Arreglos Profesionales</a></li>
+        <li><a href="#servicios">Arreglos &amp; Blanquería</a></li>
         <li><a href="#servicios">Ropa Deportiva</a></li>
         <li><a href="#servicios">Readaptaciones</a></li>
       </ul>
