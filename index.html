@@ -10,22 +10,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════════════════════════
-   PALETTE — Couture Parisienne
-   ivory · pearl · champagne · charcoal
+   PALETTE — Couture Rosé · Paris Atelier
+   ivory · pearl · champagne · rose profond
    Transmite: Dior · Chanel · Valentino
 ══════════════════════════════════════════ */
 :root {
   --iv:   #FAF8F4;   /* ivory — fondo principal */
   --pe:   #F3EDE5;   /* pearl — fondo secundario */
-  --sa:   #EAE0D6;   /* sand — bordes suaves */
+  --sa:   #E8DDD5;   /* sand — bordes suaves */
   --ch:   #C9B99A;   /* champagne — acento cálido */
   --ch2:  #A89880;   /* champagne oscuro */
-  --bl:   #D8C4BC;   /* blush dusty — acento rose */
-  --tp:   #8C7B6B;   /* taupe — texto light */
-  --dk:   #1A1410;   /* charcoal warm — texto / CTA */
-  --dm:   #5E4E44;   /* mid — texto secundario */
   --wh:   #FFFFFF;
-  --red:  #C0392B;   /* solo para urgencia */
+  /* ROSE system — reemplaza todo el negro/carbón */
+  --dk:   #5C2040;   /* plum rose profond — texto / CTA */
+  --dk2:  #471530;   /* rose más oscuro — hover */
+  --dk3:  #2E0A1E;   /* footer */
+  --dm:   #8B4D6A;   /* rose medio — texto secundario */
+  --tp:   #A87890;   /* taupe-rose — texto light */
+  --rp:   #EDD5DF;   /* rose pâle — fondo suave */
+  --rb:   #F7EBF1;   /* rose blush — hero tint */
+  --bl:   #E2C8D4;   /* blush border */
+  --red:  #B03060;   /* urgencia en tono rose */
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -48,1286 +53,1675 @@ p{line-height:1.75}
 /* ══ NAVIGATION ══ */
 nav{
   position:sticky;top:0;left:0;right:0;z-index:1000;
-  background:rgba(250,248,244,0.97);backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--sa);
-  padding:0 48px;
-  display:flex;justify-content:space-between;align-items:center;
-  height:64px;transition:all 0.3s;
+  background:rgba(250,248,244,0.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--bl);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:68px;
 }
 .nav-logo{
-  font-family:'Cormorant',serif;font-size:19px;font-weight:500;
-  color:var(--dk);text-decoration:none;letter-spacing:0.04em;
+  font-family:'Cormorant',serif;font-size:20px;letter-spacing:0.12em;
+  color:var(--dk);font-weight:500;text-decoration:none;
   display:flex;flex-direction:column;line-height:1.1;
 }
-.nav-logo small{font-size:9px;font-family:'Jost',sans-serif;font-weight:400;
-  letter-spacing:0.3em;text-transform:uppercase;color:var(--tp);margin-top:2px}
-.nav-links{display:flex;gap:34px;list-style:none;align-items:center}
+.nav-logo span{font-size:10px;letter-spacing:0.3em;color:var(--dm);font-family:'Jost',sans-serif;font-weight:300}
+.nav-links{display:flex;gap:32px;list-style:none;align-items:center}
 .nav-links a{
-  font-size:11px;font-weight:500;letter-spacing:0.16em;
-  text-transform:uppercase;color:var(--dm);text-decoration:none;transition:color 0.3s;
+  font-size:12px;letter-spacing:0.18em;color:var(--dm);
+  text-decoration:none;text-transform:uppercase;font-weight:500;
+  transition:color 0.2s;
 }
 .nav-links a:hover{color:var(--dk)}
-.nav-cta-pill{
-  background:var(--dk)!important;color:var(--wh)!important;
-  padding:10px 22px!important;font-size:10px!important;
-  letter-spacing:0.2em!important;transition:all 0.3s!important;
+.nav-cta{
+  background:var(--dk);color:var(--wh)!important;
+  padding:10px 22px;border-radius:2px;
+  font-size:11px!important;letter-spacing:0.2em!important;
+  transition:background 0.2s!important;
 }
-.nav-cta-pill:hover{background:#3A2E28!important;transform:none!important}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
-.hamburger span{width:22px;height:1.5px;background:var(--dk);display:block;transition:all 0.3s}
+.nav-cta:hover{background:var(--dk2)!important}
 
-/* ══ MOBILE MENU ══ */
-.mob-menu{
-  display:none;position:fixed;inset:0;background:rgba(26,20,16,0.98);z-index:999;
-  flex-direction:column;align-items:center;justify-content:center;gap:30px;
+/* ══════════════════════════════════════════
+   HERO — WOW Animated Gradient Entrance
+══════════════════════════════════════════ */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
-.mob-menu.on{display:flex;animation:fIn 0.28s ease}
-.mob-menu a{font-family:'Cormorant',serif;font-size:28px;color:var(--wh);text-decoration:none;transition:color 0.3s}
-.mob-menu a:hover{color:var(--ch)}
-.mob-x{position:absolute;top:26px;right:26px;background:none;border:none;color:var(--wh);font-size:26px;cursor:pointer}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(32px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+@keyframes scaleIn {
+  from { opacity:0; transform:scale(0.92); }
+  to   { opacity:1; transform:scale(1); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+@keyframes ticker {
+  0%   { transform:translateX(0); }
+  100% { transform:translateX(-50%); }
+}
+@keyframes counterUp {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes float {
+  0%,100% { transform:translateY(0px); }
+  50%      { transform:translateY(-8px); }
+}
+@keyframes pulse-ring {
+  0%   { transform:scale(1);   opacity:0.6; }
+  100% { transform:scale(1.6); opacity:0; }
+}
 
-/* ══ HERO ══ */
 .hero{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  background:var(--pe);position:relative;overflow:hidden;
+  min-height:100vh;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  background:linear-gradient(-45deg,#F7EBF1,#FAF8F4,#F3EDE5,#EDD5DF,#FAF8F4,#F0E4EA);
+  background-size:500% 500%;
+  animation:gradientShift 12s ease infinite;
 }
-.hero-bg-text{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  font-family:'Cormorant',serif;font-size:clamp(120px,18vw,260px);
-  font-weight:300;color:rgba(0,0,0,0.025);white-space:nowrap;
-  pointer-events:none;letter-spacing:0.02em;user-select:none;
+
+/* Watermark decorativo */
+.hero-watermark{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Cormorant',serif;
+  font-size:clamp(80px,18vw,260px);
+  font-weight:300;font-style:italic;
+  color:rgba(92,32,64,0.04);
+  white-space:nowrap;pointer-events:none;
+  letter-spacing:0.05em;user-select:none;
+  animation:fadeIn 2s ease 0.5s both;
 }
+
+/* Líneas decorativas */
+.hero-line{
+  position:absolute;width:1px;background:linear-gradient(to bottom,transparent,rgba(92,32,64,0.12),transparent);
+  top:0;bottom:0;animation:fadeIn 1.5s ease 1s both;
+}
+.hero-line-l{left:12%;}
+.hero-line-r{right:12%;}
+.hero-line-h{
+  position:absolute;height:1px;background:linear-gradient(to right,transparent,rgba(92,32,64,0.12),transparent);
+  left:0;right:0;animation:fadeIn 1.5s ease 1s both;
+}
+.hero-line-ht{top:20%;}
+.hero-line-hb{bottom:20%;}
+
+/* Corner ornaments */
+.hero-corner{
+  position:absolute;width:60px;height:60px;
+  border-color:rgba(92,32,64,0.15);border-style:solid;
+  animation:fadeIn 2s ease 0.8s both;
+}
+.hero-corner.tl{top:40px;left:40px;border-width:1px 0 0 1px;}
+.hero-corner.tr{top:40px;right:40px;border-width:1px 1px 0 0;}
+.hero-corner.bl{bottom:40px;left:40px;border-width:0 0 1px 1px;}
+.hero-corner.br{bottom:40px;right:40px;border-width:0 1px 1px 0;}
+
 .hero-inner{
-  display:grid;grid-template-columns:1fr 1fr;gap:0;
-  max-width:1200px;width:100%;z-index:1;
+  position:relative;z-index:2;
+  text-align:center;padding:60px 20px 40px;
+  max-width:780px;width:100%;
 }
-.hero-left{
-  padding:80px 60px 80px 40px;
-  border-right:1px solid var(--sa);
-  display:flex;flex-direction:column;justify-content:center;
-}
-.hero-right{
-  padding:80px 40px 80px 60px;
-  display:flex;flex-direction:column;justify-content:center;gap:24px;
-}
+
 .hero-eyebrow{
-  font-size:10px;font-weight:600;letter-spacing:0.45em;
-  text-transform:uppercase;color:var(--tp);margin-bottom:24px;
-  display:flex;align-items:center;gap:12px;
+  font-size:11px;letter-spacing:0.45em;color:var(--dm);
+  text-transform:uppercase;font-weight:500;font-family:'Jost',sans-serif;
+  animation:fadeUp 0.9s ease 0.2s both;
+  display:flex;align-items:center;justify-content:center;gap:12px;
 }
-.hero-eyebrow::before{content:'';width:30px;height:1px;background:var(--ch)}
+.hero-eyebrow::before,.hero-eyebrow::after{
+  content:'';display:block;width:40px;height:1px;background:var(--ch);
+}
+
 .hero-title{
-  font-size:clamp(44px,7vw,84px);font-weight:300;
-  color:var(--dk);line-height:1.05;margin-bottom:20px;
+  font-size:clamp(52px,10vw,110px);
+  font-weight:300;color:var(--dk);
+  margin:16px 0 8px;
+  animation:fadeUp 0.9s ease 0.45s both;
+  line-height:0.9;
 }
-.hero-title em{font-style:italic;color:var(--ch2)}
-.hero-subtitle{
-  font-family:'Cormorant',serif;font-size:clamp(17px,2vw,21px);
-  font-weight:300;color:var(--dm);line-height:1.75;margin-bottom:36px;
-}
-.hero-proof{
-  display:flex;gap:28px;margin-bottom:36px;
-}
-.proof-item{text-align:center}
-.proof-n{font-family:'Cormorant',serif;font-size:32px;font-weight:500;color:var(--dk);display:block;line-height:1}
-.proof-l{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--tp);margin-top:4px;display:block}
-.proof-divider{width:1px;background:var(--sa);align-self:stretch}
-.hero-btns{display:flex;flex-direction:column;gap:12px}
+.hero-title em{font-style:italic;color:var(--dm);}
 
-/* ── CTA STYLES ── */
-.cta-primary{
-  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+.hero-subtitle-name{
+  font-family:'Cormorant',serif;font-size:clamp(18px,3vw,26px);
+  font-weight:300;font-style:italic;color:var(--dm);
+  letter-spacing:0.08em;margin-bottom:4px;
+  animation:fadeUp 0.9s ease 0.6s both;
+}
+
+.hero-tagline{
+  font-size:13px;letter-spacing:0.22em;color:var(--tp);
+  text-transform:uppercase;font-weight:400;
+  margin:0 0 36px;
+  animation:fadeUp 0.9s ease 0.7s both;
+}
+
+/* Badge "Sin Cargo" con shimmer */
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--bl);border-radius:40px;
+  padding:8px 20px;
+  background:linear-gradient(90deg,var(--rb) 0%,var(--wh) 20%,var(--rb) 40%,var(--rp) 60%,var(--rb) 80%,var(--wh) 100%);
+  background-size:200% auto;
+  animation:fadeUp 0.9s ease 0.85s both, shimmer 3s linear 2s infinite;
+  font-size:11px;letter-spacing:0.25em;color:var(--dm);font-weight:500;
+}
+.hero-badge-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--dk);
+  position:relative;
+}
+.hero-badge-dot::after{
+  content:'';position:absolute;inset:-3px;border-radius:50%;
+  background:var(--dk);opacity:0.4;
+  animation:pulse-ring 1.6s ease-out infinite;
+}
+
+.hero-ctas{
+  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:48px;
+  animation:fadeUp 0.9s ease 1s both;
+}
+.btn-primary{
   background:var(--dk);color:var(--wh);
-  padding:17px 32px;border:none;cursor:pointer;
-  font-family:'Jost',sans-serif;font-size:11px;
-  font-weight:600;letter-spacing:0.22em;text-transform:uppercase;
-  text-decoration:none;transition:all 0.28s;
+  padding:18px 40px;border-radius:2px;text-decoration:none;
+  font-size:12px;letter-spacing:0.28em;font-weight:600;
+  text-transform:uppercase;font-family:'Jost',sans-serif;
+  transition:background 0.25s,transform 0.2s,box-shadow 0.25s;
+  box-shadow:0 8px 32px rgba(92,32,64,0.25);
+  display:inline-flex;align-items:center;gap:10px;
 }
-.cta-primary:hover{background:#3A2E28;transform:translateY(-1px);box-shadow:0 8px 24px rgba(26,20,16,0.18)}
-.cta-secondary{
-  display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  background:transparent;color:var(--dk);
-  padding:16px 32px;border:1px solid var(--sa);cursor:pointer;
-  font-family:'Jost',sans-serif;font-size:11px;
-  font-weight:600;letter-spacing:0.22em;text-transform:uppercase;
-  text-decoration:none;transition:all 0.28s;
+.btn-primary:hover{
+  background:var(--dk2);transform:translateY(-2px);
+  box-shadow:0 14px 40px rgba(92,32,64,0.35);
 }
-.cta-secondary:hover{border-color:var(--dk);background:var(--pe)}
-.cta-wa{
-  display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  background:#25D366;color:var(--wh);
-  padding:17px 32px;border:none;cursor:pointer;
-  font-family:'Jost',sans-serif;font-size:11px;
-  font-weight:600;letter-spacing:0.22em;text-transform:uppercase;
-  text-decoration:none;transition:all 0.28s;
+.btn-primary svg{transition:transform 0.2s;}
+.btn-primary:hover svg{transform:translateX(4px);}
+.btn-ghost{
+  border:1.5px solid var(--dk);color:var(--dk);
+  padding:17px 36px;border-radius:2px;text-decoration:none;
+  font-size:12px;letter-spacing:0.28em;font-weight:500;
+  text-transform:uppercase;font-family:'Jost',sans-serif;
+  transition:all 0.25s;
+  display:inline-flex;align-items:center;gap:10px;
 }
-.cta-wa:hover{background:#1EB85A;transform:translateY(-1px)}
+.btn-ghost:hover{background:var(--dk);color:var(--wh);}
 
-/* Hero right card */
-.hero-card{
-  background:var(--wh);border:1px solid var(--sa);padding:28px;
+/* Contadores hero */
+.hero-stats{
+  display:flex;gap:40px;justify-content:center;
+  padding-top:32px;border-top:1px solid var(--bl);
+  animation:fadeUp 0.9s ease 1.15s both;
+  flex-wrap:wrap;
 }
-.hero-card-title{
-  font-size:11px;font-weight:600;letter-spacing:0.22em;
-  text-transform:uppercase;color:var(--tp);margin-bottom:16px;
+.hero-stat{text-align:center;}
+.hero-stat-n{
+  font-family:'Cormorant',serif;font-size:clamp(28px,5vw,42px);
+  font-weight:500;color:var(--dk);line-height:1;
 }
-.hero-free-badge{
+.hero-stat-l{
+  font-size:10px;letter-spacing:0.3em;color:var(--tp);
+  text-transform:uppercase;font-weight:400;margin-top:4px;
+}
+
+/* Ticker de servicios */
+.hero-ticker{
+  position:absolute;bottom:0;left:0;right:0;
   background:var(--dk);color:var(--wh);
-  padding:14px 20px;margin-bottom:20px;text-align:center;
+  padding:12px 0;overflow:hidden;
+  border-top:1px solid rgba(255,255,255,0.08);
 }
-.hero-free-badge strong{display:block;font-family:'Cormorant',serif;font-size:22px;font-weight:500}
-.hero-free-badge span{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.65)}
-.hero-feature-list{list-style:none;margin-bottom:20px}
-.hero-feature-list li{
-  padding:10px 0;border-bottom:1px solid var(--pe);
-  font-size:13px;color:var(--dm);display:flex;align-items:center;gap:10px;
+.hero-ticker-inner{
+  display:flex;align-items:center;gap:0;
+  width:max-content;
+  animation:ticker 35s linear infinite;
+  font-size:11px;letter-spacing:0.3em;text-transform:uppercase;font-weight:500;
 }
-.hero-feature-list li:last-child{border:none}
-.hero-feature-list li::before{content:'✓';color:var(--ch2);font-weight:700;font-size:14px;flex-shrink:0}
+.hero-ticker-item{padding:0 28px;white-space:nowrap;color:rgba(255,255,255,0.85);}
+.hero-ticker-dot{color:var(--ch);font-size:14px;flex-shrink:0;}
 
-/* ══ TRUST BAR ══ */
+/* Scroll indicator */
+.scroll-hint{
+  position:absolute;bottom:60px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  animation:float 2.5s ease-in-out infinite, fadeIn 1s ease 2s both;
+  z-index:3;
+}
+.scroll-hint span{font-size:9px;letter-spacing:0.4em;color:var(--tp);text-transform:uppercase;}
+.scroll-arrow{width:1px;height:32px;background:linear-gradient(to bottom,var(--tp),transparent);}
+
+/* ══════════════════════════════════════════
+   TRUST BAR
+══════════════════════════════════════════ */
 .trust-bar{
-  background:var(--dk);padding:22px 40px;
-  display:flex;justify-content:center;gap:0;flex-wrap:wrap;
+  background:var(--pe);border-top:1px solid var(--bl);border-bottom:1px solid var(--bl);
+  padding:28px 40px;
+}
+.trust-bar-inner{
+  max-width:1100px;margin:0 auto;
+  display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap;
 }
 .trust-item{
-  display:flex;align-items:center;gap:12px;padding:0 36px;
-  border-right:1px solid rgba(255,255,255,0.12);
-  color:rgba(255,255,255,0.75);font-size:12px;letter-spacing:0.08em;
+  display:flex;align-items:center;gap:10px;
+  font-size:12px;letter-spacing:0.15em;color:var(--dm);font-weight:500;
 }
-.trust-item:last-child{border-right:none}
-.trust-item strong{color:var(--ch);font-weight:600}
-.trust-ico{font-size:16px}
+.trust-icon{color:var(--dk);font-size:18px;}
 
-/* ══ SHARED SECTION STYLES ══ */
-.section{padding:96px 0}
-.container{max-width:1180px;margin:0 auto;padding:0 40px}
-.sec-label{
-  display:block;font-size:10px;font-weight:600;letter-spacing:0.42em;
-  text-transform:uppercase;color:var(--tp);margin-bottom:16px;text-align:center;
+/* ══════════════════════════════════════════
+   SECCIONES GENERALES
+══════════════════════════════════════════ */
+.section{padding:90px 40px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-label{
+  font-size:10px;letter-spacing:0.45em;color:var(--tp);
+  text-transform:uppercase;font-weight:500;
+  display:flex;align-items:center;gap:14px;margin-bottom:18px;
 }
-.sec-title{
-  font-size:clamp(34px,4.5vw,52px);font-weight:300;
-  text-align:center;color:var(--dk);margin-bottom:14px;
+.section-label::before{content:'';display:block;width:32px;height:1px;background:var(--ch);}
+.section-title{
+  font-size:clamp(36px,5vw,58px);color:var(--dk);
+  margin-bottom:12px;
 }
-.sec-title em{font-style:italic;color:var(--ch2)}
-.sec-sub{
-  font-family:'Cormorant',serif;font-size:18px;font-weight:300;
-  color:var(--dm);text-align:center;max-width:560px;
-  margin:0 auto 56px;line-height:1.8;
+.section-sub{
+  font-size:14px;color:var(--dm);max-width:560px;
+  line-height:1.8;margin-bottom:48px;
 }
-.sec-rule{width:40px;height:1px;background:var(--ch);margin:16px auto 36px}
 
-/* ══ PROCESS STEPS ══ */
-.process{background:var(--wh)}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--sa);border:1px solid var(--sa);margin-bottom:48px}
-.step{
-  background:var(--wh);padding:42px 32px;text-align:center;
-  position:relative;transition:background 0.3s;
+/* ══════════════════════════════════════════
+   SERVICIOS
+══════════════════════════════════════════ */
+.services-section{background:var(--iv);}
+.services-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px;
+  border:1px solid var(--bl);
 }
-.step:hover{background:var(--iv)}
-.step-num{
-  font-family:'Cormorant',serif;font-size:52px;font-weight:300;
-  color:rgba(0,0,0,0.06);line-height:1;margin-bottom:14px;
+.service-card{
+  background:var(--wh);padding:44px 40px;
+  border:1px solid var(--bl);
+  transition:transform 0.3s,box-shadow 0.3s,background 0.3s;
+  position:relative;overflow:hidden;
 }
-.step-title{
-  font-family:'Cormorant',serif;font-size:20px;font-weight:500;
-  color:var(--dk);margin-bottom:10px;
+.service-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(to right,var(--dk),var(--dm));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s ease;
 }
-.step-desc{font-size:13px;color:var(--dm);line-height:1.7}
-.step-tag{
-  display:inline-block;margin-top:14px;
-  font-size:9px;font-weight:600;letter-spacing:0.2em;
-  text-transform:uppercase;color:var(--wh);
-  background:var(--dk);padding:6px 14px;
+.service-card:hover::before{transform:scaleX(1);}
+.service-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 60px rgba(92,32,64,0.12);
+  background:var(--rb);
 }
-.process-cta-row{text-align:center;padding:0 0 10px}
-
-/* ══ SERVICES ══ */
-.services{background:var(--pe)}
-.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--sa);border:1px solid var(--sa);margin-top:56px}
-.svc{
-  background:var(--wh);padding:44px 32px;transition:all 0.3s;
-  display:flex;flex-direction:column;
+.service-icon{font-size:28px;margin-bottom:18px;display:block;}
+.service-name{
+  font-family:'Cormorant',serif;font-size:26px;color:var(--dk);
+  margin-bottom:10px;
 }
-.svc:hover{background:var(--iv)}
-.svc-ico{font-size:30px;margin-bottom:18px}
-.svc-name{font-family:'Cormorant',serif;font-size:22px;font-weight:500;color:var(--dk);margin-bottom:12px}
-.svc-desc{font-family:'Cormorant',serif;font-size:16px;color:var(--dm);line-height:1.8;flex:1}
-.svc-tags{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 20px}
-.svc-tag{
-  font-size:9px;font-weight:600;letter-spacing:0.1em;
-  text-transform:uppercase;color:var(--dm);
-  border:1px solid var(--sa);padding:4px 10px;background:var(--pe);
+.service-desc{font-size:13px;color:var(--dm);line-height:1.8;margin-bottom:20px;}
+.service-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px;}
+.tag{
+  background:var(--rp);color:var(--dk);
+  font-size:10px;letter-spacing:0.2em;padding:4px 12px;border-radius:20px;
+  text-transform:uppercase;font-weight:500;
 }
-.svc-cta{
+.service-cta{
+  font-size:11px;letter-spacing:0.22em;color:var(--dk);
+  text-decoration:none;text-transform:uppercase;font-weight:600;
   display:inline-flex;align-items:center;gap:8px;
-  font-size:10px;font-weight:600;letter-spacing:0.2em;
-  text-transform:uppercase;color:var(--dk);text-decoration:none;
-  padding:12px 0;border-bottom:1px solid var(--dk);
-  transition:all 0.3s;width:fit-content;margin-top:auto;
+  transition:gap 0.2s;
 }
-.svc-cta:hover{color:var(--ch2);border-color:var(--ch2)}
-.svc-cta::after{content:'→';transition:transform 0.3s}
-.svc-cta:hover::after{transform:translateX(4px)}
+.service-cta:hover{gap:14px;}
 
-/* ══ MID-PAGE CTA BANNER ══ */
-.cta-banner{background:var(--dk);padding:80px 40px;text-align:center}
-.cta-banner h2{
-  font-family:'Cormorant',serif;font-size:clamp(32px,5vw,56px);
-  font-weight:300;color:var(--wh);margin-bottom:14px;
+/* ══════════════════════════════════════════
+   PROCESO RESERVA
+══════════════════════════════════════════ */
+.proceso-section{background:var(--pe);}
+.proceso-steps{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px;
 }
-.cta-banner h2 em{font-style:italic;color:var(--ch)}
-.cta-banner p{
-  font-family:'Cormorant',serif;font-size:20px;
-  color:rgba(255,255,255,0.6);margin-bottom:40px;line-height:1.7;max-width:520px;margin-left:auto;margin-right:auto;margin-bottom:40px;
+.step{
+  text-align:center;padding:40px 28px;
+  background:var(--wh);border:1px solid var(--bl);border-radius:2px;
+  transition:transform 0.3s,box-shadow 0.3s;
+  position:relative;
 }
-.cta-banner-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.cta-light{
-  display:inline-flex;align-items:center;gap:10px;
-  background:var(--wh);color:var(--dk);
-  padding:17px 36px;border:none;cursor:pointer;
-  font-family:'Jost',sans-serif;font-size:11px;
-  font-weight:600;letter-spacing:0.22em;text-transform:uppercase;
-  text-decoration:none;transition:all 0.28s;
+.step:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(92,32,64,0.1);}
+.step-num{
+  font-family:'Cormorant',serif;font-size:56px;
+  color:var(--rp);font-weight:300;line-height:1;margin-bottom:12px;
 }
-.cta-light:hover{background:var(--iv);transform:translateY(-2px)}
-.cta-outline-light{
-  display:inline-flex;align-items:center;gap:10px;
-  background:transparent;color:var(--wh);
-  padding:16px 36px;border:1px solid rgba(255,255,255,0.35);cursor:pointer;
-  font-family:'Jost',sans-serif;font-size:11px;
-  font-weight:600;letter-spacing:0.22em;text-transform:uppercase;
-  text-decoration:none;transition:all 0.28s;
+.step-title{font-family:'Cormorant',serif;font-size:22px;color:var(--dk);margin-bottom:8px;}
+.step-desc{font-size:12px;color:var(--dm);line-height:1.8;}
+.step-badge{
+  position:absolute;top:-12px;right:20px;
+  background:var(--dk);color:var(--wh);
+  font-size:9px;letter-spacing:0.25em;padding:4px 12px;border-radius:20px;
+  text-transform:uppercase;font-weight:600;
 }
-.cta-outline-light:hover{border-color:var(--wh);background:rgba(255,255,255,0.07)}
 
-/* ══ TESTIMONIALS ══ */
-.testimonials{background:var(--iv)}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+/* ══════════════════════════════════════════
+   PATRICIA — Storytelling + NLP
+══════════════════════════════════════════ */
+.patricia-section{
+  background:linear-gradient(135deg,var(--dk3) 0%,var(--dk) 100%);
+  padding:100px 40px;color:var(--wh);position:relative;overflow:hidden;
+}
+.patricia-section::before{
+  content:'"';font-family:'Cormorant',serif;font-size:400px;
+  position:absolute;top:-60px;left:-20px;color:rgba(255,255,255,0.03);
+  line-height:1;pointer-events:none;
+}
+.patricia-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:center;
+}
+@media(max-width:800px){.patricia-inner{grid-template-columns:1fr;gap:48px;}}
+
+/* Frame de foto */
+.patricia-photo-col{position:relative;display:flex;justify-content:center;}
+.patricia-photo-frame{
+  width:100%;max-width:380px;aspect-ratio:3/4;
+  border:1px solid rgba(255,255,255,0.15);
+  position:relative;overflow:hidden;
+  background:rgba(255,255,255,0.04);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:12px;
+}
+.patricia-photo-frame img{
+  width:100%;height:100%;object-fit:cover;
+  display:none; /* Se muestra cuando se sube la foto real */
+}
+.patricia-photo-placeholder{
+  text-align:center;padding:40px 30px;
+}
+.patricia-monogram{
+  font-family:'Cormorant',serif;font-size:72px;font-weight:300;
+  color:rgba(255,255,255,0.25);line-height:1;margin-bottom:12px;
+  letter-spacing:0.1em;
+}
+.patricia-photo-hint{
+  font-size:10px;letter-spacing:0.3em;color:rgba(255,255,255,0.3);
+  text-transform:uppercase;line-height:1.6;
+}
+.patricia-photo-frame::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:60%;
+  background:linear-gradient(to top,rgba(46,10,30,0.7),transparent);
+  pointer-events:none;
+}
+.patricia-photo-caption{
+  position:absolute;bottom:24px;left:24px;z-index:2;
+}
+.patricia-photo-caption strong{
+  display:block;font-family:'Cormorant',serif;font-size:22px;
+  color:var(--wh);font-weight:400;
+}
+.patricia-photo-caption span{
+  font-size:10px;letter-spacing:0.3em;color:rgba(255,255,255,0.55);
+  text-transform:uppercase;
+}
+.photo-corner{
+  position:absolute;width:28px;height:28px;
+  border-color:rgba(255,255,255,0.3);border-style:solid;
+}
+.photo-corner.tl{top:12px;left:12px;border-width:1px 0 0 1px;}
+.photo-corner.tr{top:12px;right:12px;border-width:1px 1px 0 0;}
+.photo-corner.bl{bottom:12px;left:12px;border-width:0 0 1px 1px;}
+.photo-corner.br{bottom:12px;right:12px;border-width:0 1px 1px 0;}
+
+/* Contenido storytelling */
+.patricia-content{color:var(--wh);}
+.patricia-label{
+  font-size:10px;letter-spacing:0.45em;color:var(--ch);
+  text-transform:uppercase;font-weight:500;
+  display:flex;align-items:center;gap:14px;margin-bottom:20px;
+}
+.patricia-label::before{content:'';display:block;width:28px;height:1px;background:var(--ch);}
+.patricia-name-title{
+  font-family:'Cormorant',serif;font-size:clamp(36px,5vw,54px);
+  font-weight:300;line-height:1.1;margin-bottom:24px;color:var(--wh);
+}
+.patricia-name-title em{font-style:italic;color:var(--ch);}
+
+.patricia-story p{
+  font-size:15px;line-height:1.9;color:rgba(255,255,255,0.82);
+  margin-bottom:18px;
+}
+.patricia-story strong{color:var(--wh);}
+.patricia-story em{color:var(--ch);font-style:normal;}
+
+/* Quote destacada */
+.patricia-quote{
+  border-left:2px solid var(--ch);
+  padding:20px 24px;margin:28px 0;
+  background:rgba(255,255,255,0.04);border-radius:0 4px 4px 0;
+}
+.patricia-quote p{
+  font-family:'Cormorant',serif;font-size:22px;font-style:italic;
+  color:var(--wh);line-height:1.5;margin:0;
+}
+.patricia-quote cite{
+  font-size:10px;letter-spacing:0.25em;color:var(--ch);
+  text-transform:uppercase;margin-top:8px;display:block;
+  font-style:normal;
+}
+
+/* Vision callout */
+.patricia-vision{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:4px;padding:24px 28px;margin:28px 0;
+}
+.patricia-vision-title{
+  font-size:10px;letter-spacing:0.3em;color:var(--ch);
+  text-transform:uppercase;font-weight:600;margin-bottom:10px;
+}
+.patricia-vision p{
+  font-size:14px;font-style:italic;color:rgba(255,255,255,0.75);
+  line-height:1.8;margin:0;
+}
+
+.patricia-stats{
+  display:flex;gap:32px;flex-wrap:wrap;margin:32px 0;
+  padding-top:28px;border-top:1px solid rgba(255,255,255,0.12);
+}
+.patricia-stat{text-align:center;}
+.patricia-stat-n{
+  font-family:'Cormorant',serif;font-size:38px;
+  color:var(--ch);font-weight:500;line-height:1;
+}
+.patricia-stat-l{
+  font-size:10px;letter-spacing:0.25em;color:rgba(255,255,255,0.4);
+  text-transform:uppercase;margin-top:4px;
+}
+.patricia-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--ch);color:var(--dk3);
+  padding:16px 36px;border-radius:2px;text-decoration:none;
+  font-size:11px;letter-spacing:0.28em;font-weight:700;
+  text-transform:uppercase;
+  transition:background 0.2s,transform 0.2s;
+  margin-top:8px;
+}
+.patricia-cta:hover{background:var(--wh);transform:translateY(-2px);}
+
+/* ══════════════════════════════════════════
+   TESTIMONIOS — Carrusel Infinito
+══════════════════════════════════════════ */
+@keyframes scrollCarousel {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 11px)); }
+}
+
+.testi-section{background:var(--iv);overflow:hidden;}
+.carousel-outer{
+  overflow:hidden;position:relative;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,black 5%,black 95%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0%,black 5%,black 95%,transparent 100%);
+}
+.carousel-track{
+  display:flex;width:max-content;gap:22px;
+  padding:8px 0 16px;
+  animation:scrollCarousel 50s linear infinite;
+}
+.carousel-outer:hover .carousel-track{animation-play-state:paused;}
 .testi{
-  background:var(--wh);border:1px solid var(--sa);
-  padding:36px 32px;position:relative;transition:all 0.3s;
+  width:360px;flex-shrink:0;
+  background:var(--wh);border:1px solid var(--bl);
+  padding:36px 32px;position:relative;
+  transition:transform 0.3s,box-shadow 0.3s;
 }
-.testi:hover{box-shadow:0 12px 40px rgba(26,20,16,0.07);transform:translateY(-3px)}
-.testi-quote{
-  font-size:52px;font-family:'Cormorant',serif;color:var(--bl);
-  line-height:0.8;margin-bottom:16px;
+.testi:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 48px rgba(92,32,64,0.1);
 }
+.testi-stars{color:#D4A0B5;letter-spacing:3px;font-size:14px;margin-bottom:14px;}
 .testi-text{
-  font-family:'Cormorant',serif;font-size:17px;font-style:italic;
-  color:var(--dm);line-height:1.75;margin-bottom:20px;
+  font-family:'Cormorant',serif;font-size:18px;
+  color:var(--dk);line-height:1.6;font-style:italic;
+  margin-bottom:20px;
 }
-.testi-service{
-  display:inline-block;font-size:9px;font-weight:600;letter-spacing:0.18em;
-  text-transform:uppercase;color:var(--tp);
-  border:1px solid var(--sa);padding:5px 12px;margin-bottom:20px;
-  background:var(--pe);
-}
-.testi-stars{color:#C9B99A;font-size:15px;margin-bottom:14px;letter-spacing:2px}
-.testi-author{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--pe)}
+.testi-author{display:flex;align-items:center;gap:12px;}
 .testi-avatar{
   width:40px;height:40px;border-radius:50%;
-  background:var(--pe);display:flex;align-items:center;justify-content:center;
-  font-size:16px;flex-shrink:0;
-}
-.testi-name{font-weight:600;font-size:13px;color:var(--dk)}
-.testi-loc{font-size:11px;color:var(--tp);margin-top:2px}
-.testi-featured{
-  grid-column:span 1;background:var(--dk);border-color:var(--dk);
-}
-.testi-featured .testi-quote{color:rgba(255,255,255,0.15)}
-.testi-featured .testi-text{color:rgba(255,255,255,0.85)}
-.testi-featured .testi-service{color:var(--ch);border-color:rgba(255,255,255,0.15)}
-.testi-featured .testi-stars{color:var(--ch)}
-.testi-featured .testi-author{border-color:rgba(255,255,255,0.1)}
-.testi-featured .testi-name{color:var(--wh)}
-.testi-featured .testi-loc{color:rgba(255,255,255,0.45)}
-.testi-featured .testi-avatar{background:rgba(255,255,255,0.08)}
-
-/* ══ SPECIALTIES ══ */
-.specs-section{background:var(--pe)}
-.specs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--sa);border:1px solid var(--sa);margin-top:56px}
-.spec{background:var(--wh);padding:38px 28px;text-align:center;transition:background 0.3s}
-.spec:hover{background:var(--iv)}
-.spec-ico{font-size:28px;margin-bottom:16px}
-.spec-name{font-family:'Cormorant',serif;font-size:19px;font-weight:500;color:var(--dk);margin-bottom:8px}
-.spec-detail{font-size:12px;color:var(--tp);line-height:1.65}
-
-/* ══ BOOKING ══ */
-.booking-section{background:var(--wh)}
-.booking-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:80px;align-items:start;margin-top:56px}
-.booking-info h3{font-family:'Cormorant',serif;font-size:30px;font-weight:400;color:var(--dk);margin-bottom:14px}
-.booking-info p{font-family:'Cormorant',serif;font-size:17px;color:var(--dm);line-height:1.8;margin-bottom:32px}
-.bfeat{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
-.bfeat-ico{
-  width:40px;height:40px;background:var(--pe);border:1px solid var(--sa);
+  background:linear-gradient(135deg,var(--rp),var(--bl));
   display:flex;align-items:center;justify-content:center;
-  font-size:16px;flex-shrink:0;
+  font-family:'Cormorant',serif;font-size:16px;color:var(--dk);font-weight:500;
 }
-.bfeat-t strong{display:block;font-size:12px;font-weight:600;letter-spacing:0.04em;color:var(--dk);margin-bottom:2px}
-.bfeat-t span{font-family:'Cormorant',serif;font-size:15px;color:var(--dm)}
-.free-callout{
-  background:var(--pe);border:1px solid var(--ch);
-  padding:20px 24px;margin-top:28px;
-  display:flex;align-items:flex-start;gap:14px;
-}
-.free-callout-ico{font-size:24px;flex-shrink:0}
-.free-callout strong{display:block;font-size:14px;font-weight:600;color:var(--dk);margin-bottom:4px}
-.free-callout span{font-family:'Cormorant',serif;font-size:16px;color:var(--dm)}
-
-/* Form */
-.form-box{background:var(--iv);padding:44px;border:1px solid var(--sa)}
-.form-title{
-  font-family:'Cormorant',serif;font-size:24px;font-weight:500;
-  color:var(--dk);margin-bottom:8px;text-align:center;
-}
-.form-sub{
-  font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;
-  color:var(--tp);text-align:center;margin-bottom:28px;
-}
-.form-group{margin-bottom:16px}
-.form-group label{
-  display:block;font-size:9px;font-weight:600;letter-spacing:0.22em;
-  text-transform:uppercase;color:var(--tp);margin-bottom:7px;
-}
-.form-group input,
-.form-group select,
-.form-group textarea{
-  width:100%;padding:13px 16px;
-  background:var(--wh);border:1px solid var(--sa);border-radius:0;
-  font-family:'Jost',sans-serif;font-size:14px;color:var(--dk);
-  outline:none;transition:border-color 0.3s;appearance:none;
-}
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus{border-color:var(--dk)}
-.form-group textarea{resize:vertical;min-height:90px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.btn-submit{
-  width:100%;padding:18px;background:var(--dk);color:var(--wh);border:none;
-  font-family:'Jost',sans-serif;font-size:11px;font-weight:600;
-  letter-spacing:0.28em;text-transform:uppercase;cursor:pointer;
-  transition:all 0.3s;margin-top:8px;
-}
-.btn-submit:hover{background:#3A2E28;transform:translateY(-1px);box-shadow:0 8px 24px rgba(26,20,16,0.18)}
-.form-disclaimer{
-  text-align:center;font-size:11px;color:var(--tp);margin-top:12px;line-height:1.5;
+.testi-name{font-size:12px;font-weight:600;letter-spacing:0.1em;color:var(--dk);}
+.testi-role{font-size:11px;color:var(--tp);letter-spacing:0.08em;}
+.testi-badge{
+  position:absolute;top:16px;right:16px;
+  background:var(--rp);color:var(--dk);
+  font-size:9px;letter-spacing:0.2em;padding:3px 10px;
+  border-radius:12px;text-transform:uppercase;font-weight:600;
 }
 
-/* ══ FAQ ══ */
-.faq-section{background:var(--pe)}
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:56px}
-.faq-item{
-  background:var(--wh);padding:32px 36px;cursor:pointer;
-  border-bottom:1px solid var(--sa);transition:background 0.3s;
+/* ══════════════════════════════════════════
+   CASO DE ÉXITO / RESULTADOS
+══════════════════════════════════════════ */
+.casos-section{background:var(--pe);}
+.casos-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;
 }
-.faq-item:hover{background:var(--iv)}
-.faq-q{
-  font-family:'Cormorant',serif;font-size:19px;font-weight:500;
-  color:var(--dk);display:flex;justify-content:space-between;align-items:center;gap:16px;
+.caso-card{
+  background:var(--wh);border:1px solid var(--bl);padding:36px 30px;
+  position:relative;overflow:hidden;
+  transition:transform 0.3s,box-shadow 0.3s;
 }
-.faq-icon{
-  flex-shrink:0;width:28px;height:28px;border:1px solid var(--sa);
+.caso-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(92,32,64,0.1);}
+.caso-card::before{
+  content:'';position:absolute;top:0;left:0;width:4px;height:100%;
+  background:linear-gradient(to bottom,var(--dk),var(--dm));
+}
+.caso-number{
+  font-family:'Cormorant',serif;font-size:48px;font-weight:300;
+  color:var(--rp);line-height:1;margin-bottom:8px;
+}
+.caso-title{font-family:'Cormorant',serif;font-size:22px;color:var(--dk);margin-bottom:10px;}
+.caso-desc{font-size:13px;color:var(--dm);line-height:1.8;}
+.caso-result{
+  margin-top:16px;padding:12px 16px;
+  background:linear-gradient(to right,var(--rp),var(--rb));
+  border-radius:2px;
+  font-size:12px;font-weight:600;color:var(--dk);
+  display:flex;align-items:center;gap:8px;
+}
+
+/* ══════════════════════════════════════════
+   PRICING / GARANTÍA
+══════════════════════════════════════════ */
+.garantia-section{background:var(--iv);}
+.garantia-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;
+}
+@media(max-width:700px){.garantia-grid{grid-template-columns:1fr;}}
+.garantia-list{list-style:none;display:flex;flex-direction:column;gap:16px;}
+.garantia-item{
+  display:flex;align-items:flex-start;gap:14px;padding:20px;
+  border:1px solid var(--bl);background:var(--wh);
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.garantia-item:hover{border-color:var(--dk);box-shadow:0 4px 20px rgba(92,32,64,0.08);}
+.garantia-check{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--rp);color:var(--dk);
   display:flex;align-items:center;justify-content:center;
-  font-size:16px;font-weight:300;color:var(--tp);transition:all 0.3s;
+  font-size:13px;flex-shrink:0;margin-top:2px;
 }
-.faq-item.open .faq-icon{transform:rotate(45deg);border-color:var(--dk)}
-.faq-a{
-  font-family:'Cormorant',serif;font-size:16px;color:var(--dm);
-  line-height:1.75;max-height:0;overflow:hidden;
-  transition:max-height 0.4s ease,padding 0.3s;
+.garantia-text strong{font-size:14px;color:var(--dk);display:block;margin-bottom:4px;}
+.garantia-text span{font-size:12px;color:var(--dm);}
+.cta-box{
+  background:linear-gradient(135deg,var(--dk),var(--dk2));
+  padding:52px 44px;color:var(--wh);text-align:center;
+  position:relative;overflow:hidden;
 }
-.faq-item.open .faq-a{max-height:300px;padding-top:16px}
-
-/* ══ SOCIAL / REDES ══ */
-.social-section{background:var(--iv);padding:80px 0;text-align:center}
-.social-pills{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:32px 0}
-.social-pill{
+.cta-box::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(255,255,255,0.04);
+}
+.cta-box-title{
+  font-family:'Cormorant',serif;font-size:40px;
+  color:var(--wh);margin-bottom:12px;
+}
+.cta-box-sub{font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:32px;line-height:1.8;}
+.btn-wsp{
+  background:#25D366;color:var(--wh);
+  padding:18px 40px;border-radius:2px;text-decoration:none;
+  font-size:12px;letter-spacing:0.28em;font-weight:700;
+  text-transform:uppercase;
   display:inline-flex;align-items:center;gap:10px;
-  padding:14px 28px;border:1px solid var(--sa);
-  font-family:'Jost',sans-serif;font-size:11px;font-weight:600;
-  letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;
-  color:var(--dk);transition:all 0.3s;background:var(--wh);
+  transition:background 0.2s,transform 0.2s,box-shadow 0.2s;
+  box-shadow:0 8px 28px rgba(37,211,102,0.35);
+  margin-bottom:14px;width:100%;justify-content:center;
 }
-.social-pill:hover{background:var(--dk);color:var(--wh);border-color:var(--dk)}
-.insta-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin:32px 0}
-.ig-item{
-  aspect-ratio:1;background:var(--pe);cursor:pointer;
-  position:relative;overflow:hidden;transition:opacity 0.3s;
+.btn-wsp:hover{background:#1EBC58;transform:translateY(-2px);box-shadow:0 14px 36px rgba(37,211,102,0.45);}
+.btn-cal{
+  background:transparent;color:rgba(255,255,255,0.75);
+  border:1px solid rgba(255,255,255,0.25);
+  padding:14px 40px;border-radius:2px;text-decoration:none;
+  font-size:11px;letter-spacing:0.25em;font-weight:500;
+  text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:10px;
+  transition:all 0.2s;width:100%;justify-content:center;
+  margin-bottom:22px;
 }
-.ig-item:nth-child(even){background:var(--sa)}
-.ig-item::after{
-  content:'✦';position:absolute;inset:0;display:flex;
-  align-items:center;justify-content:center;
-  font-size:20px;color:rgba(0,0,0,0.15);
-}
-.ig-hover{
-  position:absolute;inset:0;background:rgba(26,20,16,0.75);
-  opacity:0;display:flex;align-items:center;justify-content:center;
-  transition:opacity 0.3s;z-index:1;color:var(--wh);font-size:22px;
-}
-.ig-item:hover .ig-hover{opacity:1}
+.btn-cal:hover{background:rgba(255,255,255,0.08);color:var(--wh);}
+.cta-note{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;}
 
-/* ══ CONTACT ══ */
-.contact-section{background:var(--pe)}
-.contact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--sa);border:1px solid var(--sa);margin-top:56px}
-.ccard{
-  background:var(--wh);padding:38px 30px;text-align:center;
-  transition:all 0.3s;
+/* ══════════════════════════════════════════
+   PRESENCIA DIGITAL / SOCIAL PROOF
+══════════════════════════════════════════ */
+.social-section{background:var(--rp);padding:60px 40px;text-align:center;}
+.social-inner{max-width:700px;margin:0 auto;}
+.social-label{font-size:11px;letter-spacing:0.4em;color:var(--dm);text-transform:uppercase;margin-bottom:16px;}
+.social-title{font-family:'Cormorant',serif;font-size:clamp(30px,4vw,44px);color:var(--dk);margin-bottom:8px;}
+.social-sub{font-size:13px;color:var(--dm);margin-bottom:32px;line-height:1.8;}
+.social-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.social-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  border:1.5px solid var(--dk);color:var(--dk);
+  padding:14px 32px;border-radius:2px;text-decoration:none;
+  font-size:11px;letter-spacing:0.25em;font-weight:600;text-transform:uppercase;
+  transition:all 0.25s;background:transparent;
 }
-.ccard:hover{background:var(--iv)}
-.ccard-ico{font-size:28px;margin-bottom:14px}
-.ccard h4{font-family:'Cormorant',serif;font-size:20px;font-weight:500;color:var(--dk);margin-bottom:10px}
-.ccard p{font-family:'Cormorant',serif;font-size:15px;color:var(--dm);line-height:1.7}
-.ccard a{color:var(--dk);text-decoration:none;font-weight:500}
-.ccard a:hover{text-decoration:underline}
-.ccard-highlight{background:var(--dk)}
-.ccard-highlight h4{color:var(--wh)}
-.ccard-highlight p{color:rgba(255,255,255,0.65)}
-.ccard-highlight a{color:var(--ch)}
-.ccard-free-label{
-  display:inline-block;background:var(--ch);color:var(--dk);
-  font-size:9px;font-weight:700;letter-spacing:0.18em;
-  text-transform:uppercase;padding:5px 12px;margin-bottom:10px;
-}
+.social-btn:hover{background:var(--dk);color:var(--wh);}
+.social-btn.primary{background:var(--dk);color:var(--wh);}
+.social-btn.primary:hover{background:var(--dk2);}
 
-/* ══ FOOTER ══ */
-footer{background:#0F0C0A;color:rgba(255,255,255,0.5);padding:64px 0 28px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.07)}
-.footer-brand{font-family:'Cormorant',serif;font-size:24px;color:var(--wh);display:block;margin-bottom:6px}
-.footer-brand-sub{font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.3)}
-.footer-desc{font-family:'Cormorant',serif;font-size:15px;line-height:1.8;margin-top:16px;max-width:300px}
-.footer-addr{font-family:'Cormorant',serif;font-size:14px;line-height:1.8;margin-top:16px;color:rgba(255,255,255,0.4)}
-.footer-h{font-size:9px;font-weight:600;letter-spacing:0.32em;text-transform:uppercase;color:var(--ch);margin-bottom:20px;display:block}
-.footer-ul{list-style:none}
-.footer-ul li{margin-bottom:10px}
-.footer-ul a{font-family:'Cormorant',serif;font-size:15px;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.3s}
-.footer-ul a:hover{color:var(--ch)}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;flex-wrap:wrap;gap:10px}
-.footer-bottom p{font-size:11px;letter-spacing:0.04em}
-.footer-socs{display:flex;gap:10px}
-.footer-soc{
-  width:34px;height:34px;border:1px solid rgba(255,255,255,0.1);
+/* ══════════════════════════════════════════
+   FAQ
+══════════════════════════════════════════ */
+.faq-section{background:var(--iv);}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:700px){.faq-grid{grid-template-columns:1fr;}}
+.faq-item{
+  border:1px solid var(--bl);padding:28px;
+  transition:border-color 0.2s,box-shadow 0.2s,background 0.2s;
+}
+.faq-item:hover{border-color:var(--dk);background:var(--rb);box-shadow:0 4px 20px rgba(92,32,64,0.07);}
+.faq-q{
+  font-family:'Cormorant',serif;font-size:20px;color:var(--dk);
+  margin-bottom:10px;
+}
+.faq-a{font-size:13px;color:var(--dm);line-height:1.8;}
+
+/* ══════════════════════════════════════════
+   CONTACTO / DATOS
+══════════════════════════════════════════ */
+.contacto-section{background:var(--pe);}
+.contacto-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;
+}
+@media(max-width:700px){.contacto-grid{grid-template-columns:1fr;gap:40px;}}
+.info-row{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px;}
+.info-icon{
+  width:36px;height:36px;background:var(--rp);border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,0.45);text-decoration:none;font-size:14px;transition:all 0.3s;
+  color:var(--dk);flex-shrink:0;margin-top:2px;
 }
-.footer-soc:hover{border-color:var(--ch);color:var(--ch)}
+.info-text strong{display:block;font-size:13px;color:var(--dk);font-weight:600;margin-bottom:2px;}
+.info-text span{font-size:13px;color:var(--dm);}
+.horarios-table{width:100%;border-collapse:collapse;margin-top:24px;}
+.horarios-table td{
+  padding:10px 14px;border-bottom:1px solid var(--bl);
+  font-size:12px;color:var(--dm);
+}
+.horarios-table td:first-child{color:var(--dk);font-weight:500;letter-spacing:0.05em;}
+.horarios-table tr:last-child td{border-bottom:none;}
+.map-placeholder{
+  background:var(--rp);border:1px solid var(--bl);
+  height:220px;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:10px;text-align:center;padding:20px;
+  margin-top:24px;
+}
+.map-placeholder a{
+  font-size:12px;letter-spacing:0.18em;color:var(--dk);
+  text-decoration:none;font-weight:600;text-transform:uppercase;
+}
+.map-placeholder a:hover{text-decoration:underline;}
 
-/* ══ FLOATING WA ══ */
-.wa-float{
-  position:fixed;bottom:32px;right:32px;z-index:998;
-  display:flex;align-items:center;gap:10px;text-decoration:none;
+/* ══════════════════════════════════════════
+   CTA FLOTANTE WHATSAPP
+══════════════════════════════════════════ */
+.fab-wsp{
+  position:fixed;bottom:28px;right:28px;z-index:999;
+  width:60px;height:60px;border-radius:50%;
+  background:#25D366;display:flex;align-items:center;justify-content:center;
+  text-decoration:none;box-shadow:0 6px 28px rgba(37,211,102,0.45);
+  transition:transform 0.2s,box-shadow 0.2s;
 }
-.wa-tip{
-  background:var(--dk);color:var(--wh);
-  padding:9px 16px;font-size:11px;font-weight:600;letter-spacing:0.05em;
-  box-shadow:0 4px 18px rgba(0,0,0,0.18);opacity:0;
-  transform:translateX(10px);transition:all 0.3s;white-space:nowrap;
-}
-.wa-float:hover .wa-tip{opacity:1;transform:translateX(0)}
-.wa-btn{
-  width:56px;height:56px;background:#25D366;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 20px rgba(37,211,102,0.4);transition:all 0.3s;
-  animation:waPulse 2.8s infinite;
-}
-.wa-btn:hover{transform:scale(1.08)}
-.wa-btn svg{width:26px;height:26px;fill:white}
-
-/* ══ MODAL ══ */
-.modal-ov{
-  display:none;position:fixed;inset:0;
-  background:rgba(15,12,10,0.75);z-index:3000;
-  align-items:center;justify-content:center;padding:20px;
-}
-.modal-ov.on{display:flex;animation:fIn 0.28s ease}
-.modal-box{
-  background:var(--wh);padding:48px 44px;
-  max-width:460px;width:100%;text-align:center;position:relative;
-  animation:slideUp 0.35s ease;
-}
-.modal-x{position:absolute;top:16px;right:20px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--tp)}
-.modal-ico{font-size:44px;margin-bottom:16px}
-.modal-box h3{font-family:'Cormorant',serif;font-size:28px;color:var(--dk);margin-bottom:10px}
-.modal-box p{font-family:'Cormorant',serif;font-size:17px;color:var(--dm);margin-bottom:28px;line-height:1.7}
-.modal-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.modal-btn-wa{
-  display:inline-flex;align-items:center;gap:8px;
-  background:#25D366;color:var(--wh);padding:13px 22px;
-  font-size:11px;font-weight:600;letter-spacing:0.1em;
-  text-decoration:none;transition:all 0.3s;font-family:'Jost',sans-serif;
-}
-.modal-btn-gc{
-  display:inline-flex;align-items:center;gap:8px;
-  background:#4285F4;color:var(--wh);padding:13px 22px;
-  font-size:11px;font-weight:600;letter-spacing:0.1em;
-  text-decoration:none;transition:all 0.3s;font-family:'Jost',sans-serif;
+.fab-wsp:hover{transform:scale(1.1);box-shadow:0 10px 36px rgba(37,211,102,0.55);}
+.fab-wsp::before{
+  content:'';position:absolute;inset:-3px;border-radius:50%;
+  border:2px solid rgba(37,211,102,0.35);
+  animation:pulse-ring 2s ease-out infinite;
 }
 
-/* ══ ANIMATIONS ══ */
-@keyframes fIn     {from{opacity:0}to{opacity:1}}
-@keyframes slideUp {from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes waPulse {
-  0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4)}
-  50%    {box-shadow:0 4px 28px rgba(37,211,102,0.6),0 0 0 12px rgba(37,211,102,0.08)}
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer{
+  background:var(--dk3);color:rgba(255,255,255,0.6);
+  padding:60px 40px 32px;
 }
-.fu{opacity:0;transform:translateY(24px);transition:opacity 0.65s ease,transform 0.65s ease}
-.fu.vis{opacity:1;transform:translateY(0)}
-.d1{transition-delay:0.1s}.d2{transition-delay:0.2s}.d3{transition-delay:0.3s}.d4{transition-delay:0.4s}
+.footer-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:48px;
+  margin-bottom:48px;
+}
+@media(max-width:700px){.footer-inner{grid-template-columns:1fr;gap:32px;}}
+.footer-brand{font-family:'Cormorant',serif;font-size:22px;color:var(--wh);margin-bottom:12px;}
+.footer-brand-sub{font-size:11px;letter-spacing:0.25em;color:var(--ch);margin-bottom:16px;display:block;}
+.footer-desc{font-size:12px;line-height:1.8;}
+.footer-col-title{
+  font-size:10px;letter-spacing:0.35em;color:var(--ch);
+  text-transform:uppercase;font-weight:600;margin-bottom:16px;
+}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-links a{font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:var(--wh);}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding-top:28px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+}
+.footer-copy{font-size:11px;color:rgba(255,255,255,0.3);}
+.footer-credits{font-size:11px;color:rgba(255,255,255,0.2);}
+
+/* ══ REVEAL ANIMATIONS ══ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-d1{transition-delay:0.1s;}
+.reveal-d2{transition-delay:0.2s;}
+.reveal-d3{transition-delay:0.3s;}
+.reveal-d4{transition-delay:0.4s;}
 
 /* ══ RESPONSIVE ══ */
-@media(max-width:1024px){
-  .hero-inner{grid-template-columns:1fr}
-  .hero-left{border-right:none;border-bottom:1px solid var(--sa);padding:60px 40px}
-  .hero-right{padding:40px 40px 60px}
-  .svc-grid{grid-template-columns:repeat(2,1fr)}
-  .specs-grid{grid-template-columns:repeat(2,1fr)}
-  .testi-grid{grid-template-columns:1fr 1fr}
-  .steps{grid-template-columns:repeat(2,1fr)}
-  .booking-grid{grid-template-columns:1fr}
-  .faq-grid{grid-template-columns:1fr}
-  .contact-grid{grid-template-columns:repeat(2,1fr)}
-  @media(max-width:1100px){.contact-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .section{padding:70px 24px;}
 }
-@media(max-width:768px){
-  nav{padding:0 22px;height:58px}
-  .nav-links{display:none}
-  .hamburger{display:flex}
-  .container{padding:0 22px}
-  .section{padding:68px 0}
-  .svc-grid{grid-template-columns:1fr}
-  .testi-grid{grid-template-columns:1fr}
-  .steps{grid-template-columns:1fr}
-  .specs-grid{grid-template-columns:repeat(2,1fr)}
-  .contact-grid{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr;gap:36px}
-  .footer-bottom{flex-direction:column;text-align:center}
-  .form-row{grid-template-columns:1fr}
-  .form-box{padding:28px 20px}
-  .trust-bar{flex-direction:column;gap:14px;text-align:center}
-  .trust-item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.12);padding:8px 0;justify-content:center}
-  .trust-item:last-child{border-bottom:none}
-  .insta-grid{grid-template-columns:repeat(3,1fr)}
-  .wa-float{bottom:20px;right:20px}
-  .hero-proof{gap:16px}
-  .hero-btns{flex-direction:column}
-  .cta-banner-btns{flex-direction:column;align-items:center}
+@media(max-width:600px){
+  .hero-ctas{flex-direction:column;align-items:center;}
+  .hero-stats{gap:24px;}
+  .trust-bar-inner{gap:20px;}
+  .hero-corner{display:none;}
 }
 </style>
 </head>
 <body>
 
-<!-- ══ TOP BAR ══ -->
+<!-- ═══ BARRA DE URGENCIA ═══ -->
 <div class="top-bar">
-  🎁 <strong>Primera consulta + toma de medidas SIN CARGO</strong> en estudio presencial · General Pico, La Pampa
-  <a href="#reservas">→ Reservar ahora</a>
+  <strong>✦ Temporada Alta</strong> — Agenda limita de turnos disponibles.
+  <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20vi%20que%20hay%20pocos%20turnos%20disponibles%20y%20quiero%20reservar%20el%20m%C3%ADo%20antes%20de%20que%20se%20agoten." target="_blank" rel="noopener">Asegurá el tuyo →</a>
 </div>
 
-<!-- ══ NAVIGATION ══ -->
-<nav id="nav">
-  <a href="#inicio" class="nav-logo">
+<!-- ═══ NAVEGACIÓN ═══ -->
+<nav>
+  <a href="#" class="nav-logo">
     Mi Taller Creaciones
-    <small>Patricia B. Santos · General Pico</small>
+    <span>Patricia B. Santos · Alta Costura</span>
   </a>
   <ul class="nav-links">
     <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#patricia">Mi Historia</a></li>
     <li><a href="#testimonios">Testimonios</a></li>
-    <li><a href="#reservas">Reservas</a></li>
-    <li><a href="#faq">FAQ</a></li>
     <li><a href="#contacto">Contacto</a></li>
-    <li><a href="#reservas" class="nav-cta-pill">Reservar gratis</a></li>
+    <li>
+      <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20quiero%20reservar%20mi%20consulta%20sin%20cargo." target="_blank" rel="noopener" class="nav-cta">Reservar Gratis</a>
+    </li>
   </ul>
-  <div class="hamburger" id="hamBtn"><span></span><span></span><span></span></div>
 </nav>
 
-<!-- ══ MOBILE MENU ══ -->
-<div class="mob-menu" id="mobMenu">
-  <button class="mob-x" id="mobX">✕</button>
-  <a href="#servicios"  onclick="closeMob()">Servicios</a>
-  <a href="#testimonios" onclick="closeMob()">Testimonios</a>
-  <a href="#reservas"  onclick="closeMob()">Reservas</a>
-  <a href="#faq"       onclick="closeMob()">Preguntas</a>
-  <a href="#contacto"  onclick="closeMob()">Contacto</a>
-  <a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Vengo%20de%20la%20web%20y%20quisiera%20reservar%20mi%20consulta%20gratis%20%F0%9F%8C%B9" target="_blank">💬 WhatsApp</a>
-</div>
+<!-- ═══════════════════════════════════
+     HERO — WOW VISUAL
+════════════════════════════════════ -->
+<section class="hero">
+  <!-- Decoración -->
+  <div class="hero-watermark">Couture</div>
+  <div class="hero-line hero-line-l"></div>
+  <div class="hero-line hero-line-r"></div>
+  <div class="hero-line-h hero-line-ht"></div>
+  <div class="hero-corner tl"></div>
+  <div class="hero-corner tr"></div>
+  <div class="hero-corner bl"></div>
+  <div class="hero-corner br"></div>
 
-<!-- ══ HERO ══ -->
-<section class="hero" id="inicio">
-  <div class="hero-bg-text">Couture</div>
+  <!-- Contenido principal -->
   <div class="hero-inner">
+    <div class="hero-eyebrow">General Pico · La Pampa · Alta Costura</div>
 
-    <div class="hero-left fu">
-      <div class="hero-eyebrow">Alta Costura · General Pico, La Pampa</div>
-      <h1 class="hero-title">La modista<br>que <em>todas</em><br>recomiendan</h1>
-      <p class="hero-subtitle">Patricia B. Santos transforma tus sueños en prendas únicas. Desde vestidos de novia hasta vestuario de danza — con la calidad y el detalle que merecés.</p>
+    <h1 class="hero-title">
+      Mi Taller<br><em>Creaciones</em>
+    </h1>
 
-      <div class="hero-proof">
-        <div class="proof-item">
-          <span class="proof-n">+15</span>
-          <span class="proof-l">Años</span>
-        </div>
-        <div class="proof-divider"></div>
-        <div class="proof-item">
-          <span class="proof-n">+500</span>
-          <span class="proof-l">Clientas</span>
-        </div>
-        <div class="proof-divider"></div>
-        <div class="proof-item">
-          <span class="proof-n">100%</span>
-          <span class="proof-l">A medida</span>
-        </div>
-      </div>
+    <p class="hero-subtitle-name">Patricia B. Santos</p>
+    <p class="hero-tagline">Modista Profesional · Cada prenda, una obra de arte</p>
 
-      <div class="hero-btns">
-        <a href="#reservas" class="cta-primary">📅 &nbsp;Reservar consulta gratis</a>
-        <a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Vengo%20de%20la%20web%2C%20quisiera%20hacer%20una%20consulta%20%F0%9F%8C%B9" target="_blank" class="cta-wa">💬 &nbsp;Escribile a Patricia ahora</a>
+    <div style="display:flex;justify-content:center;margin-bottom:36px;">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Primera consulta &amp; medidas SIN CARGO
       </div>
     </div>
 
-    <div class="hero-right fu d1">
-      <div class="hero-card">
-        <div class="hero-card-title">¿Por qué elegir a Patricia?</div>
-        <div class="hero-free-badge">
-          <strong>Cotización + Medidas GRATIS</strong>
-          <span>Sin compromiso · En estudio presencial</span>
-        </div>
-        <ul class="hero-feature-list">
-          <li>Vestidos de novia y alta costura a medida</li>
-          <li>Vestuario para folklore, tango y bachata</li>
-          <li>Arreglos express: ruedos, cierres, botones</li>
-          <li>Máquina Overlock profesional incluida</li>
-          <li>Turnos disponibles de Lun a Sáb + Feriados</li>
-          <li>Atención personalizada directa con Patricia</li>
-        </ul>
-        <a href="#reservas" class="cta-primary" style="width:100%;justify-content:center">Reservar mi turno gratis →</a>
-      </div>
-      <div class="hero-card" style="background:var(--sa);border-color:var(--sa);padding:20px 28px;display:flex;align-items:center;gap:14px">
-        <span style="font-size:24px">📍</span>
-        <div>
-          <div style="font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--tp);margin-bottom:3px">Estudio Presencial</div>
-          <div style="font-family:'Cormorant',serif;font-size:17px;color:var(--dk)">Calle 34 esq. 25 · General Pico, La Pampa</div>
-          <div style="font-size:12px;color:var(--tp);margin-top:3px">Lun–Vie 9–18 hs · Sáb 9–13 hs · Feriados abierto</div>
-        </div>
-      </div>
+    <div class="hero-ctas">
+      <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20quiero%20reservar%20mi%20consulta%20sin%20cargo.%20%C2%BFTen%C3%A9s%20turnos%20disponibles%3F" target="_blank" rel="noopener" class="btn-primary">
+        Reservar Ahora · Gratis
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="#servicios" class="btn-ghost">
+        Ver Servicios
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
     </div>
 
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-n" data-target="500">0</div>
+        <div class="hero-stat-l">Clientas Felices</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-n" data-target="15">0</div>
+        <div class="hero-stat-l">Años de Experiencia</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-n" data-target="100">0</div>
+        <div class="hero-stat-l">% Satisfacción</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-n">∞</div>
+        <div class="hero-stat-l">Amor en cada prenda</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint">
+    <span>Deslizá</span>
+    <div class="scroll-arrow"></div>
+  </div>
+
+  <!-- Ticker -->
+  <div class="hero-ticker">
+    <div class="hero-ticker-inner">
+      <span class="hero-ticker-item">Alta Costura</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Vestidos de Novia</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Vestuario de Danza</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Trajes y Camisas</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Arreglos Profesionales</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Disfraces y Fantasía</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Ropa Deportiva</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Folklore · Tango · Bachata</span><span class="hero-ticker-dot">·</span>
+      <!-- duplicate for seamless loop -->
+      <span class="hero-ticker-item">Alta Costura</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Vestidos de Novia</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Vestuario de Danza</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Trajes y Camisas</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Arreglos Profesionales</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Disfraces y Fantasía</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Ropa Deportiva</span><span class="hero-ticker-dot">·</span>
+      <span class="hero-ticker-item">Folklore · Tango · Bachata</span><span class="hero-ticker-dot">·</span>
+    </div>
   </div>
 </section>
 
-<!-- ══ TRUST BAR ══ -->
+<!-- ═══ TRUST BAR ═══ -->
 <div class="trust-bar">
-  <div class="trust-item"><span class="trust-ico">⭐</span><span>Más de <strong>500 clientas satisfechas</strong></span></div>
-  <div class="trust-item"><span class="trust-ico">🎁</span><span><strong>Cotización y medidas sin cargo</strong></span></div>
-  <div class="trust-item"><span class="trust-ico">📍</span><span>Estudio en <strong>General Pico, La Pampa</strong></span></div>
-  <div class="trust-item"><span class="trust-ico">✂️</span><span><strong>Alta costura y arreglos</strong> · Máquina Overlock</span></div>
-  <div class="trust-item"><span class="trust-ico">💬</span><span>Atención directa con <strong>Patricia</strong></span></div>
+  <div class="trust-bar-inner">
+    <div class="trust-item">
+      <span class="trust-icon">✦</span>
+      <span>Primera consulta sin cargo</span>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">✦</span>
+      <span>Toma de medidas gratuita</span>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">✦</span>
+      <span>Máquina Overlock profesional</span>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">✦</span>
+      <span>+500 clientas satisfechas</span>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">✦</span>
+      <span>15 años de trayectoria</span>
+    </div>
+  </div>
 </div>
 
-<!-- ══ PROCESS ══ -->
-<section class="section process" id="proceso">
-  <div class="container">
-    <span class="sec-label fu">✦ Sin vueltas · Sin complicaciones ✦</span>
-    <h2 class="sec-title fu d1">¿Cómo <em>funciona</em>?</h2>
-    <div class="sec-rule fu d2"></div>
-    <p class="sec-sub fu d3">Empezar es más fácil de lo que pensás. En 4 pasos simples, tu prenda ideal está lista.</p>
-    <div class="steps">
-      <div class="step fu">
+<!-- ═══════════════════════════════════
+     SERVICIOS
+════════════════════════════════════ -->
+<section class="section services-section" id="servicios">
+  <div class="section-inner">
+    <p class="section-label reveal">Especialidades</p>
+    <h2 class="section-title reveal reveal-d1">Lo que Patricia<br><em style="font-style:italic">crea para vos</em></h2>
+    <p class="section-sub reveal reveal-d2">Cada prenda es única. Cada clienta merece sentirse extraordinaria. Desde la primer consulta hasta el último detalle, Patricia trabaja con vos.</p>
+
+    <div class="services-grid">
+
+      <div class="service-card reveal">
+        <span class="service-icon">👗</span>
+        <h3 class="service-name">Alta Costura</h3>
+        <p class="service-desc">Vestidos de novia, trajes de gala, disfraces y vestuario especial. Cada pieza diseñada y confeccionada a medida, pensada para que brillés en el momento más importante.</p>
+        <div class="service-tags">
+          <span class="tag">Novia</span><span class="tag">Gala</span><span class="tag">XV Años</span><span class="tag">Eventos</span>
+        </div>
+        <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20quiero%20consultar%20sobre%20alta%20costura%20y%20vestido%20a%20medida." target="_blank" rel="noopener" class="service-cta">
+          Consultar sin cargo →
+        </a>
+      </div>
+
+      <div class="service-card reveal reveal-d1">
+        <span class="service-icon">💃</span>
+        <h3 class="service-name">Danza &amp; Espectáculo</h3>
+        <p class="service-desc">Vestuario profesional para folklore, tango, bachata, ballet y danza contemporánea. Diseños que acompañan cada movimiento con elegancia y durabilidad.</p>
+        <div class="service-tags">
+          <span class="tag">Folklore</span><span class="tag">Tango</span><span class="tag">Bachata</span><span class="tag">Ballet</span>
+        </div>
+        <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20necesito%20vestuario%20para%20danza.%20Me%20pod%C3%A9s%20asesorar%3F" target="_blank" rel="noopener" class="service-cta">
+          Consultar sin cargo →
+        </a>
+      </div>
+
+      <div class="service-card reveal reveal-d2">
+        <span class="service-icon">✂️</span>
+        <h3 class="service-name">Arreglos Profesionales</h3>
+        <p class="service-desc">Ruedos, cierres, botones, costuras y todo tipo de arreglo. Trabajo prolijo, rápido y al precio justo. Tu ropa favorita, como nueva.</p>
+        <div class="service-tags">
+          <span class="tag">Ruedos</span><span class="tag">Cierres</span><span class="tag">Botones</span><span class="tag">Costuras</span>
+        </div>
+        <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20necesito%20un%20arreglo%20en%20una%20prenda.%20%C2%BFC%C3%B3mo%20funciona%3F" target="_blank" rel="noopener" class="service-cta">
+          Consultar sin cargo →
+        </a>
+      </div>
+
+      <div class="service-card reveal reveal-d3">
+        <span class="service-icon">🏃</span>
+        <h3 class="service-name">Ropa Deportiva &amp; Técnica</h3>
+        <p class="service-desc">Indumentaria deportiva a medida con telas técnicas y de alta performance. Prendas que se adaptan a tu cuerpo y a tu actividad.</p>
+        <div class="service-tags">
+          <span class="tag">Running</span><span class="tag">Ciclismo</span><span class="tag">Gym</span><span class="tag">A medida</span>
+        </div>
+        <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20quiero%20ropa%20deportiva%20a%20medida." target="_blank" rel="noopener" class="service-cta">
+          Consultar sin cargo →
+        </a>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="service-icon">🎭</span>
+        <h3 class="service-name">Disfraces &amp; Fantasía</h3>
+        <p class="service-desc">Disfraces para eventos, teatro, carnaval y cosplay. Desde diseños simples hasta piezas de fantasía elaboradas con todos los detalles.</p>
+        <div class="service-tags">
+          <span class="tag">Teatro</span><span class="tag">Carnaval</span><span class="tag">Cosplay</span><span class="tag">Fantasía</span>
+        </div>
+        <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20necesito%20un%20disfraz%20especial." target="_blank" rel="noopener" class="service-cta">
+          Consultar sin cargo →
+        </a>
+      </div>
+
+      <div class="service-card reveal reveal-d1">
+        <span class="service-icon">🔄</span>
+        <h3 class="service-name">Readaptaciones</h3>
+        <p class="service-desc">Transformá prendas que ya tenés en algo completamente nuevo. Actualizá el estilo, cambiá el largo o reutilizá telas de valor sentimental en un diseño moderno.</p>
+        <div class="service-tags">
+          <span class="tag">Upcycling</span><span class="tag">Renovar</span><span class="tag">Transformar</span>
+        </div>
+        <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20tengo%20una%20prenda%20que%20quiero%20readaptar." target="_blank" rel="noopener" class="service-cta">
+          Consultar sin cargo →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     PATRICIA — Historia + NLP
+════════════════════════════════════ -->
+<section class="patricia-section" id="patricia">
+  <div class="patricia-inner">
+
+    <!-- COLUMNA FOTO -->
+    <div class="patricia-photo-col reveal">
+      <div class="patricia-photo-frame">
+        <div class="photo-corner tl"></div>
+        <div class="photo-corner tr"></div>
+        <div class="photo-corner bl"></div>
+        <div class="photo-corner br"></div>
+
+        <!-- FOTO REAL: descomentá la línea de abajo y borrá el placeholder cuando tengas la foto -->
+        <!-- <img src="patricia.jpg" alt="Patricia B. Santos — Modista"> -->
+
+        <!-- PLACEHOLDER hasta que se suba la foto -->
+        <div class="patricia-photo-placeholder">
+          <div class="patricia-monogram">P.B.S.</div>
+          <p class="patricia-photo-hint">Aquí va tu foto, Patricia.<br>Solo decinos y la agregamos.</p>
+        </div>
+
+        <div class="patricia-photo-caption">
+          <strong>Patricia B. Santos</strong>
+          <span>Modista &amp; Diseñadora</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA STORYTELLING -->
+    <div class="patricia-content reveal reveal-d2">
+
+      <div class="patricia-label">La artesana detrás de cada prenda</div>
+
+      <h2 class="patricia-name-title">
+        Conocé a <em>Patricia</em>,<br>la modista que<br>te hace sentir única
+      </h2>
+
+      <div class="patricia-story">
+        <p>Si llegaste hasta acá, es porque <strong>intuís que hay algo diferente acá</strong>. Que una prenda no es solo tela y costuras. Que ponerse algo hecho especialmente para vos tiene un poder que pocas cosas en la vida igualan.</p>
+
+        <p>Patricia empezó a coser de chica, mirando cómo <strong>las manos de su madre transformaban retazos de tela en algo hermoso</strong>. Hoy, con más de 15 años de experiencia y más de 500 clientas que la eligen una y otra vez, ese amor por el oficio nunca cambió.</p>
+
+        <p>Lo que sí cambió fue la <em>maestría</em>. Cada prenda que sale de Mi Taller Creaciones lleva horas de atención al detalle, de ajustes milimétricos, de escucharte para entender no solo qué querés ponerte, sino <strong>cómo querés sentirte</strong>.</p>
+      </div>
+
+      <div class="patricia-quote">
+        <p>"Cada clienta que entra al taller me trae una historia. Mi trabajo es ayudarla a contarla con lo que lleva puesto."</p>
+        <cite>— Patricia B. Santos</cite>
+      </div>
+
+      <div class="patricia-story">
+        <p>Cerrá los ojos un segundo. Imaginá ponerte esa prenda que siempre soñaste. Que te queda perfecta — no "bastante bien", sino <em>perfecta</em>. Que cuando te mirás al espejo decís "sí, esto soy yo".</p>
+        <p>Eso es lo que <strong>Patricia hace posible, todos los días</strong>, en su taller de Calle 34 esquina 25, en General Pico.</p>
+      </div>
+
+      <div class="patricia-vision">
+        <div class="patricia-vision-title">✦ La promesa de Patricia</div>
+        <p>"Nunca vas a salir de mi taller sin sentirte hermosa. Si algo no te convence, lo trabajamos hasta que sea perfecto. Tu satisfacción no es opcional para mí — es el único resultado que acepto."</p>
+      </div>
+
+      <div class="patricia-stats">
+        <div class="patricia-stat">
+          <div class="patricia-stat-n">+500</div>
+          <div class="patricia-stat-l">Clientas</div>
+        </div>
+        <div class="patricia-stat">
+          <div class="patricia-stat-n">15+</div>
+          <div class="patricia-stat-l">Años</div>
+        </div>
+        <div class="patricia-stat">
+          <div class="patricia-stat-n">100%</div>
+          <div class="patricia-stat-l">Dedicación</div>
+        </div>
+      </div>
+
+      <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20me%20gustar%C3%ADa%20conocer%20el%20taller%20y%20charlar%20sobre%20lo%20que%20necesito." target="_blank" rel="noopener" class="patricia-cta">
+        Hablá directamente con Patricia
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     PROCESO DE RESERVA
+════════════════════════════════════ -->
+<section class="section proceso-section" id="como-funciona">
+  <div class="section-inner">
+    <p class="section-label reveal">Simple y sin complicaciones</p>
+    <h2 class="section-title reveal reveal-d1">Cómo reservar<br><em style="font-style:italic">tu turno gratis</em></h2>
+    <p class="section-sub reveal reveal-d2">En menos de 2 minutos podés tener tu turno agendado. Sin formularios complicados, sin esperas.</p>
+
+    <div class="proceso-steps">
+      <div class="step reveal">
+        <div class="step-badge">100% Gratis</div>
         <div class="step-num">01</div>
-        <div class="step-title">Reservá tu turno</div>
-        <p class="step-desc">Por WhatsApp o por el formulario de esta página. Sin costo, sin compromiso. Solo elegís fecha y hora.</p>
-        <span class="step-tag">Gratis</span>
+        <h3 class="step-title">Escribile a Patricia</h3>
+        <p class="step-desc">Mandá un WhatsApp contando qué necesitás. Patricia responde personalmente, sin bots ni intermediarios.</p>
       </div>
-      <div class="step fu d1">
+      <div class="step reveal reveal-d1">
         <div class="step-num">02</div>
-        <div class="step-title">Consulta presencial</div>
-        <p class="step-desc">Venís al estudio (Calle 34 esq. 25). Patricia toma tus medidas, escucha tu idea y te asesora sin cargo.</p>
-        <span class="step-tag">Sin cargo</span>
+        <h3 class="step-title">Elegí tu turno</h3>
+        <p class="step-desc">Juntas eligen el día y horario que mejor te quede. Lunes a viernes 9–18 hs, sábados 9–13 hs. Feriados abierto.</p>
       </div>
-      <div class="step fu d2">
+      <div class="step reveal reveal-d2">
         <div class="step-num">03</div>
-        <div class="step-title">Recibís tu presupuesto</div>
-        <p class="step-desc">Patricia te da una cotización detallada, honesta y sin letra chica. Vos decidís si avanzar.</p>
-        <span class="step-tag">Transparente</span>
+        <h3 class="step-title">Primera consulta</h3>
+        <p class="step-desc">Vení al taller en Calle 34 esq. 25. Patricia te escucha, te asesora y toma medidas. Sin cargo, sin compromiso.</p>
       </div>
-      <div class="step fu d3">
+      <div class="step reveal reveal-d3">
+        <div class="step-badge">✦ Magia</div>
         <div class="step-num">04</div>
-        <div class="step-title">Tu prenda lista</div>
-        <p class="step-desc">Patricia confecciona con precisión artesanal. El resultado: una prenda que te queda como un guante.</p>
-        <span class="step-tag">A medida</span>
+        <h3 class="step-title">Tu prenda toma vida</h3>
+        <p class="step-desc">Patricia trabaja en tu encargo con todo su arte. Cuando esté lista, te avisamos para la prueba y entrega final.</p>
       </div>
     </div>
-    <div class="process-cta-row fu">
-      <a href="#reservas" class="cta-primary">Empezar ahora → es gratis</a>
-    </div>
-  </div>
-</section>
 
-<!-- ══ SERVICES ══ -->
-<section class="section services" id="servicios">
-  <div class="container">
-    <span class="sec-label fu">✦ Todo lo que Patricia hace ✦</span>
-    <h2 class="sec-title fu d1">Nuestros <em>Servicios</em></h2>
-    <div class="sec-rule fu d2"></div>
-    <p class="sec-sub fu d3">Desde la alta costura más exigente hasta el arreglo más urgente — con el mismo nivel de dedicación y detalle.</p>
-    <div class="svc-grid">
-      <div class="svc fu">
-        <span class="svc-ico">👗</span>
-        <div class="svc-name">Alta Costura</div>
-        <p class="svc-desc">Prendas únicas creadas desde cero, completamente a tu medida. Materiales seleccionados, técnica artesanal impecable.</p>
-        <div class="svc-tags">
-          <span class="svc-tag">Vestidos de Novia</span>
-          <span class="svc-tag">Trajes</span>
-          <span class="svc-tag">Formal</span>
-        </div>
-        <a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Quisiera%20consultar%20sobre%20Alta%20Costura%20%F0%9F%8C%B9" target="_blank" class="svc-cta">Consultar este servicio</a>
-      </div>
-      <div class="svc fu d1">
-        <span class="svc-ico">💃</span>
-        <div class="svc-name">Danza &amp; Espectáculo</div>
-        <p class="svc-desc">Vestuario para el escenario que se mueve con vos. Confeccionado para brillar bajo las luces con total libertad.</p>
-        <div class="svc-tags">
-          <span class="svc-tag">Folklore</span>
-          <span class="svc-tag">Tango</span>
-          <span class="svc-tag">Bachata</span>
-          <span class="svc-tag">Actos</span>
-        </div>
-        <a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Quisiera%20consultar%20sobre%20vestuario%20de%20danza%20%F0%9F%8C%B9" target="_blank" class="svc-cta">Consultar este servicio</a>
-      </div>
-      <div class="svc fu d2">
-        <span class="svc-ico">✂️</span>
-        <div class="svc-name">Arreglos &amp; Retoques</div>
-        <p class="svc-desc">Ruedos, cierres, botones, ajustes de talle. Rápido, prolijo y accesible. Tus prendas favoritas, perfectas otra vez.</p>
-        <div class="svc-tags">
-          <span class="svc-tag">Ruedos</span>
-          <span class="svc-tag">Cierres</span>
-          <span class="svc-tag">Botones</span>
-          <span class="svc-tag">Retoque</span>
-        </div>
-        <a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Necesito%20un%20arreglo%20de%20ropa%20%F0%9F%8C%B9" target="_blank" class="svc-cta">Consultar este servicio</a>
-      </div>
-      <div class="svc fu">
-        <span class="svc-ico">🎭</span>
-        <div class="svc-name">Disfraces &amp; Teatral</div>
-        <p class="svc-desc">Para el teatro, el carnaval, actos escolares o cualquier evento que pida un look especial con magia y detalle.</p>
-        <div class="svc-tags">
-          <span class="svc-tag">Teatro</span>
-          <span class="svc-tag">Carnaval</span>
-          <span class="svc-tag">Escolar</span>
-        </div>
-        <a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Quisiera%20consultar%20sobre%20disfraces%20%F0%9F%8C%B9" target="_blank" class="svc-cta">Consultar este servicio</a>
-      </div>
-      <div class="svc fu d1">
-        <span class="svc-ico">🏃‍♀️</span>
-        <div class="svc-name">Ropa Deportiva</div>
-        <p class="svc-desc">Prendas funcionales, cómodas y estilizadas. Confección y arreglos para que tu ropa deportiva te quede perfecta.</p>
-        <div class="svc-tags">
-          <span class="svc-tag">Confección</span>
-          <span class="svc-tag">Arreglos</span>
-          <span class="svc-tag">A medida</span>
-        </div>
-        <a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Quisiera%20consultar%20sobre%20ropa%20deportiva%20%F0%9F%8C%B9" target="_blank" class="svc-cta">Consultar este servicio</a>
-      </div>
-      <div class="svc fu d2">
-        <span class="svc-ico">🧵</span>
-        <div class="svc-name">Readaptaciones</div>
-        <p class="svc-desc">Esa prenda que guardás con cariño vuelve a la vida. Patricia la moderniza, transforma y adapta a tu talle actual.</p>
-        <div class="svc-tags">
-          <span class="svc-tag">Modernización</span>
-          <span class="svc-tag">Transformación</span>
-          <span class="svc-tag">Rescate</span>
-        </div>
-        <a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Tengo%20una%20prenda%20para%20readaptar%20%F0%9F%8C%B9" target="_blank" class="svc-cta">Consultar este servicio</a>
-      </div>
+    <div style="text-align:center;margin-top:48px;" class="reveal">
+      <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20quiero%20reservar%20mi%20primer%20consulta%20sin%20cargo.%20%C2%BFC%C3%B3mo%20hago%3F" target="_blank" rel="noopener" class="btn-primary">
+        Empezar ahora — Es gratis
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ══ MID-PAGE CTA BANNER ══ -->
-<div class="cta-banner">
-  <div class="container">
-    <h2>La primera visita<br>es completamente <em>gratis</em></h2>
-    <p>Vení al estudio sin compromiso. Patricia te toma las medidas, escucha tu idea y te da un presupuesto claro. Sin sorpresas, sin letra chica.</p>
-    <div class="cta-banner-btns">
-      <a href="#reservas" class="cta-light">📅 &nbsp;Reservar mi turno sin cargo</a>
-      <a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Quiero%20reservar%20mi%20consulta%20gratuita%20%F0%9F%8C%B9" target="_blank" class="cta-outline-light">💬 &nbsp;Hablar con Patricia ahora</a>
+<!-- ═══════════════════════════════════
+     TESTIMONIOS — Carrusel Infinito
+════════════════════════════════════ -->
+<section class="section testi-section" id="testimonios">
+  <div class="section-inner" style="padding-bottom:0;">
+    <p class="section-label reveal">Lo que dicen ellas</p>
+    <h2 class="section-title reveal reveal-d1">500 clientas que<br><em style="font-style:italic">ya lo vivieron</em></h2>
+    <p class="section-sub reveal reveal-d2">Historias reales de mujeres reales. Cada testimonio es una historia de confianza, arte y transformación.</p>
+  </div>
+
+  <div class="carousel-outer reveal">
+    <div class="carousel-track">
+      <!-- CARDS ORIGINALES (8) -->
+      <div class="testi">
+        <div class="testi-badge">Novia</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Mi vestido de novia fue un sueño hecho realidad. Patricia entendió exactamente lo que quería, incluso cuando yo no sabía explicarlo bien."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div>
+            <div class="testi-name">María José R.</div>
+            <div class="testi-role">Casada en noviembre — General Pico</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-badge">Danza</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Llevamos 3 años trabajando con Patricia para el vestuario de nuestra escuela de folklore. La calidad, el detalle y los precios son insuperables."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">L</div>
+          <div>
+            <div class="testi-name">Laura G.</div>
+            <div class="testi-role">Directora de escuela de danza</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-badge">Arreglo</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Llevé un vestido de mi abuela para readaptarlo. Patricia lo transformó en algo moderno y precioso, sin perder la esencia original. Lloré de emoción."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">V</div>
+          <div>
+            <div class="testi-name">Valentina P.</div>
+            <div class="testi-role">Readaptación — General Pico</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Vine con una idea vaga y salí con la prenda más hermosa que tengo. Patricia tiene ese don de materializar lo que ni vos misma podés describir."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">C</div>
+          <div>
+            <div class="testi-name">Carla M.</div>
+            <div class="testi-role">Alta Costura · Santa Rosa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-badge">XV Años</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"El vestido de mis 15 superó todo lo que habíamos imaginado. Mis amigas no podían creer que estaba hecho a medida. Patricia es una artista."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div>
+            <div class="testi-name">Sofía L.</div>
+            <div class="testi-role">Quinceañera — General Pico</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Tuve un problema de talla y necesitaba un arreglo urgente. Patricia me atendió ese mismo día y lo resolvió perfectamente. Super recomendada."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div>
+            <div class="testi-name">Ana K.</div>
+            <div class="testi-role">Arreglo urgente — La Pampa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-badge">Tango</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Mis trajes de tango son una obra de arte. Patricia entiende cómo el cuerpo se mueve y diseña pensando en eso. Cada presentación es un éxito gracias a ella."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">R</div>
+          <div>
+            <div class="testi-name">Romina B.</div>
+            <div class="testi-role">Bailarina profesional de tango</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Lo que más valoro de Patricia es que realmente te escucha. No te apura, no te vende lo que le conviene a ella. Te ayuda a tomar la mejor decisión para vos."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">F</div>
+          <div>
+            <div class="testi-name">Florencia D.</div>
+            <div class="testi-role">Clienta habitual — General Pico</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DUPLICADOS para loop infinito (8 repetidos) -->
+      <div class="testi">
+        <div class="testi-badge">Novia</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Mi vestido de novia fue un sueño hecho realidad. Patricia entendió exactamente lo que quería, incluso cuando yo no sabía explicarlo bien."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div>
+            <div class="testi-name">María José R.</div>
+            <div class="testi-role">Casada en noviembre — General Pico</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-badge">Danza</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Llevamos 3 años trabajando con Patricia para el vestuario de nuestra escuela de folklore. La calidad, el detalle y los precios son insuperables."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">L</div>
+          <div>
+            <div class="testi-name">Laura G.</div>
+            <div class="testi-role">Directora de escuela de danza</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-badge">Arreglo</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Llevé un vestido de mi abuela para readaptarlo. Patricia lo transformó en algo moderno y precioso, sin perder la esencia original. Lloré de emoción."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">V</div>
+          <div>
+            <div class="testi-name">Valentina P.</div>
+            <div class="testi-role">Readaptación — General Pico</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Vine con una idea vaga y salí con la prenda más hermosa que tengo. Patricia tiene ese don de materializar lo que ni vos misma podés describir."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">C</div>
+          <div>
+            <div class="testi-name">Carla M.</div>
+            <div class="testi-role">Alta Costura · Santa Rosa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-badge">XV Años</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"El vestido de mis 15 superó todo lo que habíamos imaginado. Mis amigas no podían creer que estaba hecho a medida. Patricia es una artista."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div>
+            <div class="testi-name">Sofía L.</div>
+            <div class="testi-role">Quinceañera — General Pico</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Tuve un problema de talla y necesitaba un arreglo urgente. Patricia me atendió ese mismo día y lo resolvió perfectamente. Super recomendada."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div>
+            <div class="testi-name">Ana K.</div>
+            <div class="testi-role">Arreglo urgente — La Pampa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-badge">Tango</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Mis trajes de tango son una obra de arte. Patricia entiende cómo el cuerpo se mueve y diseña pensando en eso. Cada presentación es un éxito gracias a ella."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">R</div>
+          <div>
+            <div class="testi-name">Romina B.</div>
+            <div class="testi-role">Bailarina profesional de tango</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Lo que más valoro de Patricia es que realmente te escucha. No te apura, no te vende lo que le conviene a ella. Te ayuda a tomar la mejor decisión para vos."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">F</div>
+          <div>
+            <div class="testi-name">Florencia D.</div>
+            <div class="testi-role">Clienta habitual — General Pico</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ══ TESTIMONIALS ══ -->
-<section class="section testimonials" id="testimonios">
-  <div class="container">
-    <span class="sec-label fu">✦ Lo que dicen nuestras clientas ✦</span>
-    <h2 class="sec-title fu d1">Casos de <em>Éxito</em></h2>
-    <div class="sec-rule fu d2"></div>
-    <p class="sec-sub fu d3">Más de 500 mujeres en General Pico y La Pampa confían en Patricia. Estos son solo algunos de sus testimonios.</p>
-    <div class="testi-grid">
+  <div style="text-align:center;margin-top:40px;padding-bottom:0;" class="reveal">
+    <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20le%C3%AD%20los%20testimonios%20y%20me%20gustar%C3%ADa%20reservar%20mi%20consulta%20sin%20cargo." target="_blank" rel="noopener" class="btn-primary">
+      Quiero vivir esta experiencia — Reservar gratis
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</section>
 
-      <div class="testi fu">
-        <div class="testi-quote">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <span class="testi-service">Vestido de Novia</span>
-        <p class="testi-text">El vestido de mi casamiento fue exactamente lo que soñé. Patricia escuchó cada detalle y lo llevó a la realidad. Todas mis amigas me preguntaron quién lo había hecho.</p>
-        <div class="testi-author">
-          <div class="testi-avatar">👰</div>
-          <div>
-            <div class="testi-name">Valeria R.</div>
-            <div class="testi-loc">General Pico · 2024</div>
-          </div>
-        </div>
+<!-- ═══════════════════════════════════
+     CASOS DE ÉXITO
+════════════════════════════════════ -->
+<section class="section casos-section">
+  <div class="section-inner">
+    <p class="section-label reveal">Resultados reales</p>
+    <h2 class="section-title reveal reveal-d1">Casos de éxito<br><em style="font-style:italic">que hablan solos</em></h2>
+
+    <div class="casos-grid">
+      <div class="caso-card reveal">
+        <div class="caso-number">01</div>
+        <h3 class="caso-title">La novia que no encontraba su vestido</h3>
+        <p class="caso-desc">Sebastiana probó 12 vestidos en tres ciudades. Ninguno la convencía. Llegó a Patricia con un boceto en papel. Tres semanas después, tenía el vestido de sus sueños a medida.</p>
+        <div class="caso-result">✦ Resultado: "Fue el vestido más hermoso de todo el evento"</div>
       </div>
 
-      <div class="testi testi-featured fu d1">
-        <div class="testi-quote">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <span class="testi-service">Vestuario de Folklore</span>
-        <p class="testi-text">Le hice los vestidos de folklore a toda mi compañía de danza. Patricia entiende el movimiento, los colores y la tradición. Nunca tuvimos una costura que ceda en escena.</p>
-        <div class="testi-author">
-          <div class="testi-avatar" style="font-size:16px">💃</div>
-          <div>
-            <div class="testi-name">Directora Marcela L.</div>
-            <div class="testi-loc">Elenco Folkórico · General Pico</div>
-          </div>
-        </div>
+      <div class="caso-card reveal reveal-d1">
+        <div class="caso-number">02</div>
+        <h3 class="caso-title">El grupo de danza que necesitaba uniformidad</h3>
+        <p class="caso-desc">12 bailarinas de folklore, 12 tallas diferentes. Patricia diseñó y confeccionó todos los trajes en tiempo récord, con un resultado absolutamente uniforme y elegante.</p>
+        <div class="caso-result">✦ Resultado: Premio al mejor vestuario en el festival provincial</div>
       </div>
 
-      <div class="testi fu d2">
-        <div class="testi-quote">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <span class="testi-service">Arreglos Exprés</span>
-        <p class="testi-text">Llevé tres prendas para arreglos rápidos antes de un viaje. Las tuve en 48 horas, perfectas. La atención de Patricia es increíble, te hace sentir que tu pedido es el más importante.</p>
-        <div class="testi-author">
-          <div class="testi-avatar">👩</div>
-          <div>
-            <div class="testi-name">Daniela M.</div>
-            <div class="testi-loc">General Pico · 2025</div>
-          </div>
-        </div>
+      <div class="caso-card reveal reveal-d2">
+        <div class="caso-number">03</div>
+        <h3 class="caso-title">El traje del abuelo, renovado para el nieto</h3>
+        <p class="caso-desc">Una familia quería honrar al abuelo en su casamiento. Patricia readaptó el traje de 40 años atrás, conservando la tela original y modernizando completamente el corte.</p>
+        <div class="caso-result">✦ Resultado: La familia lloró de emoción. El traje, perfecto.</div>
       </div>
-
-      <div class="testi fu">
-        <div class="testi-quote">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <span class="testi-service">Traje Formal</span>
-        <p class="testi-text">Patricia me hizo el traje para la graduación de mi hija. La calidad es impresionante. Tiene ojo para los detalles que realmente elevan una prenda. Totalmente recomendada.</p>
-        <div class="testi-author">
-          <div class="testi-avatar">👩‍💼</div>
-          <div>
-            <div class="testi-name">Claudia B.</div>
-            <div class="testi-loc">General Pico · 2024</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi fu d1">
-        <div class="testi-quote">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <span class="testi-service">Readaptación</span>
-        <p class="testi-text">Le llevé el vestido de casamiento de mi mamá para readaptarlo al estilo actual. Patricia lo hizo nuevo sin perder la esencia. Lloré cuando me lo probé. Gracias infinitas.</p>
-        <div class="testi-author">
-          <div class="testi-avatar">👑</div>
-          <div>
-            <div class="testi-name">Luciana F.</div>
-            <div class="testi-loc">Santa Rosa · 2025</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi fu d2">
-        <div class="testi-quote">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <span class="testi-service">Vestuario de Tango</span>
-        <p class="testi-text">Necesitaba vestuario profesional para competencia de tango. Patricia conoce la danza, sabe dónde tiene que moverse la tela. Quedé en el podio, y mi vestido fue el más comentado.</p>
-        <div class="testi-author">
-          <div class="testi-avatar" style="font-size:16px">🌹</div>
-          <div>
-            <div class="testi-name">Sofía P.</div>
-            <div class="testi-loc">General Pico · 2024</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <div style="text-align:center;margin-top:40px" class="fu">
-      <a href="#reservas" class="cta-primary">Quiero ser la próxima caso de éxito →</a>
     </div>
   </div>
 </section>
 
-<!-- ══ SPECIALTIES ══ -->
-<section class="section specs-section">
-  <div class="container">
-    <span class="sec-label fu">✦ Equipamiento Profesional ✦</span>
-    <h2 class="sec-title fu d1">Calidad que se <em>nota</em></h2>
-    <div class="sec-rule fu d2"></div>
-    <div class="specs-grid">
-      <div class="spec fu"><div class="spec-ico">🪡</div><div class="spec-name">Overlock Profesional</div><p class="spec-detail">Terminaciones impecables, resistentes y duraderas en cada costura</p></div>
-      <div class="spec fu d1"><div class="spec-ico">✂️</div><div class="spec-name">Corte de Precisión</div><p class="spec-detail">Milímetro a milímetro para que cada prenda se adapte exactamente a tu cuerpo</p></div>
-      <div class="spec fu d2"><div class="spec-ico">💎</div><div class="spec-name">Materiales Selectos</div><p class="spec-detail">Patricia elige los mejores materiales para cada tipo de prenda y presupuesto</p></div>
-      <div class="spec fu d3"><div class="spec-ico">🌟</div><div class="spec-name">Garantía Total</div><p class="spec-detail">Tu satisfacción es la única forma de cerrar cada trabajo. Sin excusas.</p></div>
-    </div>
-  </div>
-</section>
+<!-- ═══════════════════════════════════
+     GARANTÍA + CTA PRINCIPAL
+════════════════════════════════════ -->
+<section class="section garantia-section" id="garantia">
+  <div class="section-inner">
+    <div class="garantia-grid">
+      <div>
+        <p class="section-label reveal">Sin riesgos, sin letra chica</p>
+        <h2 class="section-title reveal reveal-d1">La garantía<br><em style="font-style:italic">Patricia</em></h2>
+        <p class="section-sub reveal reveal-d2">Cuando trabajás con Patricia, no hay sorpresas. Solo resultados que te hacen sentir que elegiste bien.</p>
 
-<!-- ══ BOOKING ══ -->
-<section class="section booking-section" id="reservas">
-  <div class="container">
-    <span class="sec-label fu">✦ Es gratis · Es fácil · Es hoy ✦</span>
-    <h2 class="sec-title fu d1">Reservar tu <em>Turno</em></h2>
-    <div class="sec-rule fu d2"></div>
-    <p class="sec-sub fu d3">Completá el formulario y Patricia te confirma por WhatsApp. El turno queda en tu Google Calendar con recordatorio automático.</p>
-    <div class="booking-grid">
-      <div class="fu">
-        <h3>Hablás directamente<br>con Patricia</h3>
-        <p>No hay intermediarios. Cuando reservás, Patricia recibe el mensaje personalmente y te responde a la brevedad. Así de simple.</p>
-        <div class="bfeat">
-          <div class="bfeat-ico">💬</div>
-          <div class="bfeat-t">
-            <strong>Confirmación por WhatsApp</strong>
-            <span>Patricia te confirma personalmente en minutos</span>
-          </div>
-        </div>
-        <div class="bfeat">
-          <div class="bfeat-ico">🔔</div>
-          <div class="bfeat-t">
-            <strong>Google Calendar Incluido</strong>
-            <span>Guardás el turno con un click y recibís recordatorio automático</span>
-          </div>
-        </div>
-        <div class="bfeat">
-          <div class="bfeat-ico">⏰</div>
-          <div class="bfeat-t">
-            <strong>Horarios Amplios</strong>
-            <span>Lun–Vie 9 a 18 hs · Sáb 9 a 13 hs · Feriados abierto</span>
-          </div>
-        </div>
-        <div class="free-callout">
-          <span class="free-callout-ico">🎁</span>
-          <div>
-            <strong>La primera visita es 100% sin cargo</strong>
-            <span>Cotización presencial + toma de medidas gratis. Vení a conocer el estudio en Calle 34 esq. 25, General Pico, sin ningún compromiso.</span>
-          </div>
-        </div>
-      </div>
-      <div class="form-box fu d1">
-        <div class="form-title">Solicitar Turno</div>
-        <div class="form-sub">Primera consulta · Sin cargo · Sin compromiso</div>
-        <form id="bookForm">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Nombre completo *</label>
-              <input type="text" id="fNombre" placeholder="Tu nombre" required>
+        <ul class="garantia-list">
+          <li class="garantia-item reveal">
+            <span class="garantia-check">✓</span>
+            <div class="garantia-text">
+              <strong>Primera consulta 100% sin cargo</strong>
+              <span>Vení, charlamos, te asesoramos. Sin ningún compromiso de tu parte.</span>
             </div>
-            <div class="form-group">
-              <label>Teléfono / WhatsApp *</label>
-              <input type="tel" id="fTel" placeholder="+54 9 2302..." required>
+          </li>
+          <li class="garantia-item reveal reveal-d1">
+            <span class="garantia-check">✓</span>
+            <div class="garantia-text">
+              <strong>Toma de medidas gratuita</strong>
+              <span>Para que tu prenda te quede perfecta desde el primer momento.</span>
             </div>
-          </div>
-          <div class="form-group">
-            <label>¿Qué necesitás? *</label>
-            <select id="fServicio" required>
-              <option value="">— Elegí un servicio —</option>
-              <option value="Alta Costura · Vestido de Novia">👗 Vestido de Novia</option>
-              <option value="Alta Costura · Traje Formal">👔 Traje Formal</option>
-              <option value="Vestuario de Danza · Folklore">💃 Danza · Folklore</option>
-              <option value="Vestuario de Danza · Tango">🌹 Danza · Tango</option>
-              <option value="Vestuario de Danza · Bachata">🎶 Danza · Bachata</option>
-              <option value="Vestuario de Actos Escolares">🎒 Actos Escolares</option>
-              <option value="Disfraz o Vestuario Temático">🎭 Disfraz / Temático</option>
-              <option value="Arreglo · Ruedo">✂️ Arreglo · Ruedo</option>
-              <option value="Arreglo · Cambio de Cierre">✂️ Arreglo · Cierre</option>
-              <option value="Arreglo · Botones">🔘 Arreglo · Botones</option>
-              <option value="Arreglo General o Retoque">🧵 Arreglo / Retoque</option>
-              <option value="Readaptación de Prenda">♻️ Readaptación</option>
-              <option value="Ropa Deportiva">🏃 Ropa Deportiva</option>
-              <option value="Otro">✳️ Otro (detallar abajo)</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Fecha preferida *</label>
-              <input type="date" id="fFecha" required>
+          </li>
+          <li class="garantia-item reveal reveal-d2">
+            <span class="garantia-check">✓</span>
+            <div class="garantia-text">
+              <strong>Ajustes incluidos</strong>
+              <span>Si algo no te queda perfecto en la prueba, lo corregimos sin costo extra.</span>
             </div>
-            <div class="form-group">
-              <label>Horario preferido *</label>
-              <select id="fHora" required>
-                <option value="">— Elegí —</option>
-                <option value="09:00">09:00 hs</option>
-                <option value="09:30">09:30 hs</option>
-                <option value="10:00">10:00 hs</option>
-                <option value="10:30">10:30 hs</option>
-                <option value="11:00">11:00 hs</option>
-                <option value="11:30">11:30 hs</option>
-                <option value="14:00">14:00 hs</option>
-                <option value="14:30">14:30 hs</option>
-                <option value="15:00">15:00 hs</option>
-                <option value="15:30">15:30 hs</option>
-                <option value="16:00">16:00 hs</option>
-                <option value="16:30">16:30 hs</option>
-                <option value="17:00">17:00 hs</option>
-                <option value="17:30">17:30 hs</option>
-                <option value="18:00">18:00 hs</option>
-              </select>
+          </li>
+          <li class="garantia-item reveal reveal-d3">
+            <span class="garantia-check">✓</span>
+            <div class="garantia-text">
+              <strong>Atención personalizada</strong>
+              <span>Hablás directamente con Patricia. Sin intermediarios, sin confusiones.</span>
             </div>
-          </div>
-          <div class="form-group">
-            <label>Contanos más (opcional)</label>
-            <textarea id="fNotas" placeholder="Describí tu prenda, medidas aproximadas, colores, referencias, urgencia..."></textarea>
-          </div>
-          <button type="submit" class="btn-submit">📅 &nbsp;Solicitar turno gratis ahora</button>
-          <p class="form-disclaimer">Al enviar, Patricia recibe tu solicitud por WhatsApp y te confirma el turno.<br>Primera consulta y toma de medidas <strong>sin cargo</strong>.</p>
-        </form>
+          </li>
+        </ul>
+      </div>
+
+      <div class="cta-box reveal reveal-d2">
+        <h3 class="cta-box-title">¿Lista para tu consulta gratuita?</h3>
+        <p class="cta-box-sub">Más de 500 mujeres ya confiaron en Patricia. Hoy puede ser tu turno. La primera consulta y toma de medidas es completamente sin cargo.</p>
+
+        <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20quiero%20reservar%20mi%20consulta%20sin%20cargo.%20%C2%BFTen%C3%A9s%20turnos%20esta%20semana%3F" target="_blank" rel="noopener" class="btn-wsp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Escribile a Patricia — Gratis
+        </a>
+
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consulta+Mi+Taller+Creaciones&details=Primera+consulta+y+toma+de+medidas+sin+cargo+con+Patricia+B.+Santos&location=Calle+34+esquina+25,+General+Pico,+La+Pampa&sf=true&output=xml" target="_blank" rel="noopener" class="btn-cal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Agendar en Google Calendar
+        </a>
+
+        <p class="cta-note">Sin cargo · Sin compromiso · Patricia te responde personalmente</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ FAQ ══ -->
+<!-- ═══════════════════════════════════
+     REDES SOCIALES
+════════════════════════════════════ -->
+<section class="social-section">
+  <div class="social-inner reveal">
+    <p class="social-label">Seguila en redes</p>
+    <h2 class="social-title">Mirá el trabajo de Patricia<br>antes de reservar</h2>
+    <p class="social-sub">Fotos reales de prendas reales. Instagram y Facebook con el portfolio completo de Mi Taller Creaciones.</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/mitallercreaciones" target="_blank" rel="noopener" class="social-btn primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        @mitallercreaciones
+      </a>
+      <a href="https://www.facebook.com/mitallercreaciones" target="_blank" rel="noopener" class="social-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        Facebook
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     FAQ
+════════════════════════════════════ -->
 <section class="section faq-section" id="faq">
-  <div class="container">
-    <span class="sec-label fu">✦ Preguntas Frecuentes ✦</span>
-    <h2 class="sec-title fu d1">¿Tenés <em>dudas</em>?</h2>
-    <div class="sec-rule fu d2"></div>
-    <p class="sec-sub fu d3">Respondemos las preguntas más comunes. Si la tuya no está, escribile directo a Patricia.</p>
-    <div class="faq-grid fu">
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">¿La primera consulta realmente es gratis? <div class="faq-icon">+</div></div>
-        <div class="faq-a">Sí, totalmente gratis y sin compromiso. Venís al estudio, Patricia te toma las medidas, escucha tu idea y te da un presupuesto. Vos decidís si avanzar o no. Sin presión.</div>
-      </div>
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">¿Cuánto tiempo demora una prenda? <div class="faq-icon">+</div></div>
-        <div class="faq-a">Depende del tipo de trabajo. Un arreglo simple (ruedo, cierre) puede estar en 24–48 horas. Un vestido de novia o alta costura puede llevar varias semanas. En la consulta Patricia te da una fecha de entrega precisa.</div>
-      </div>
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">¿Puedo llevar una foto de referencia? <div class="faq-icon">+</div></div>
-        <div class="faq-a">¡Por supuesto! Es lo mejor que podés hacer. Cuanto más referencias tengas (fotos de revistas, Pinterest, Instagram), más fácil es para Patricia entender exactamente lo que buscás.</div>
-      </div>
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">¿Dónde queda el estudio? <div class="faq-icon">+</div></div>
-        <div class="faq-a">En Calle 34 esquina 25, General Pico, La Pampa. Estamos abiertos de Lunes a Viernes de 9 a 18 hs y Sábados de 9 a 13 hs. También abrimos los feriados.</div>
-      </div>
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">¿Hacen vestidos de novia desde cero? <div class="faq-icon">+</div></div>
-        <div class="faq-a">Sí. Es uno de los servicios más especiales de Patricia. Desde la primera consulta hasta el último retoque el día antes de la boda. Trabajamos con telas y materiales de alta calidad para que ese día sea perfecto.</div>
-      </div>
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">¿Hacen arreglos de urgencia? <div class="faq-icon">+</div></div>
-        <div class="faq-a">Sí, en la medida de la agenda disponible. Lo mejor es escribirle a Patricia por WhatsApp con tu situación. Hacemos lo posible por ayudarte rápido cuando hay urgencia real.</div>
-      </div>
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">¿Puedo traer mi propia tela? <div class="faq-icon">+</div></div>
-        <div class="faq-a">Absolutamente. Podés traer tu propia tela o Patricia te asesora para elegir el material más adecuado según el tipo de prenda. Hay opciones para todos los presupuestos.</div>
-      </div>
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">¿Cómo confirmo mi turno? <div class="faq-icon">+</div></div>
-        <div class="faq-a">Completás el formulario de reserva o escribís por WhatsApp. Patricia te confirma personalmente. Al reservar también te damos un link para guardar el turno en tu Google Calendar con recordatorio automático.</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:40px" class="fu">
-      <p style="font-family:'Cormorant',serif;font-size:18px;color:var(--dm);margin-bottom:20px">¿Tu pregunta no está acá?</p>
-      <a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Tengo%20una%20consulta%20%F0%9F%8C%B9" target="_blank" class="cta-wa">💬 &nbsp;Preguntale directo a Patricia</a>
-    </div>
-  </div>
-</section>
+  <div class="section-inner">
+    <p class="section-label reveal">Preguntas frecuentes</p>
+    <h2 class="section-title reveal reveal-d1">Todo lo que<br><em style="font-style:italic">querés saber</em></h2>
 
-<!-- ══ SOCIAL / REDES ══ -->
-<div class="social-section">
-  <div class="container">
-    <span class="sec-label fu">✦ Seguinos y mandanos un mensaje ✦</span>
-    <h2 class="sec-title fu d1">Nuestras <em>Redes</em></h2>
-    <div class="sec-rule fu d2"></div>
-    <p class="sec-sub fu d3">Mirá creaciones reales, pedí turno por DM y encontrá inspiración para tu próxima prenda.</p>
-    <div class="social-pills fu">
-      <a href="https://www.instagram.com/mitallercreaciones/" target="_blank" class="social-pill">📷 &nbsp;Instagram · @mitallercreaciones</a>
-      <a href="https://www.facebook.com/mitallercreaciones" target="_blank" class="social-pill">🔵 &nbsp;Facebook · Mi Taller Creaciones</a>
-      <a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Vengo%20de%20la%20web%20%F0%9F%8C%B9" target="_blank" class="social-pill">💬 &nbsp;WhatsApp directo</a>
-    </div>
-    <div class="insta-grid fu">
-      <a href="https://www.instagram.com/mitallercreaciones/" target="_blank" class="ig-item"><div class="ig-hover">📷</div></a>
-      <a href="https://www.instagram.com/mitallercreaciones/" target="_blank" class="ig-item"><div class="ig-hover">📷</div></a>
-      <a href="https://www.instagram.com/mitallercreaciones/" target="_blank" class="ig-item"><div class="ig-hover">📷</div></a>
-      <a href="https://www.instagram.com/mitallercreaciones/" target="_blank" class="ig-item"><div class="ig-hover">📷</div></a>
-      <a href="https://www.instagram.com/mitallercreaciones/" target="_blank" class="ig-item"><div class="ig-hover">📷</div></a>
-      <a href="https://www.instagram.com/mitallercreaciones/" target="_blank" class="ig-item"><div class="ig-hover">📷</div></a>
-    </div>
-  </div>
-</div>
-
-<!-- ══ CONTACT ══ -->
-<section class="section contact-section" id="contacto">
-  <div class="container">
-    <span class="sec-label fu">✦ Hablá directamente con Patricia ✦</span>
-    <h2 class="sec-title fu d1">¿Cómo <em>llegamos</em>?</h2>
-    <div class="sec-rule fu d2"></div>
-    <div class="contact-grid">
-      <div class="ccard ccard-highlight fu">
-        <div class="ccard-ico">💬</div>
-        <h4>WhatsApp</h4>
-        <p>Escribile directamente a Patricia.<br>Respuesta rápida, trato personal.<br><br>
-        <a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Vengo%20de%20la%20web%20%F0%9F%8C%B9" target="_blank">+54 9 2302 592608</a></p>
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <h3 class="faq-q">¿La primera consulta es realmente sin cargo?</h3>
+        <p class="faq-a">Sí, 100%. Vení, charlamos, te asesoramos y tomamos medidas. Sin ningún costo ni compromiso. Si después querés avanzar, ahí hablamos de precios.</p>
       </div>
-      <div class="ccard fu d1">
-        <div class="ccard-ico">📍</div>
-        <h4>Estudio Presencial</h4>
-        <p>Calle 34 esquina 25<br>General Pico, La Pampa<br><br>Primera visita <strong>sin cargo</strong></p>
+      <div class="faq-item reveal reveal-d1">
+        <h3 class="faq-q">¿Cuánto tiempo tarda una prenda a medida?</h3>
+        <p class="faq-a">Depende de la complejidad. Un arreglo simple puede estar en 2-3 días. Una prenda de alta costura puede llevar 2-4 semanas. Patricia te lo comunica con anticipación.</p>
       </div>
-      <div class="ccard fu d2">
-        <div class="ccard-ico">⏰</div>
-        <h4>Horarios</h4>
-        <p>Lun–Vie: 9:00 a 18:00 hs<br>Sábados: 9:00 a 13:00 hs<br><span style="color:var(--dk);font-weight:600">Feriados: abierto ✓</span></p>
+      <div class="faq-item reveal reveal-d2">
+        <h3 class="faq-q">¿Puedo llevar mi propia tela?</h3>
+        <p class="faq-a">Por supuesto. Podés traer tu tela o Patricia puede asesorarte sobre dónde conseguir la mejor calidad para tu proyecto.</p>
       </div>
-      <div class="ccard fu d3" style="text-align:center">
-        <div class="ccard-ico">🎁</div>
-        <div class="ccard-free-label">Sin cargo</div>
-        <h4>Consulta Gratis</h4>
-        <p>Cotización presencial y toma de medidas <strong>100% gratuitas</strong>. Sin compromiso.</p>
+      <div class="faq-item reveal reveal-d3">
+        <h3 class="faq-q">¿Hacen entregas a domicilio?</h3>
+        <p class="faq-a">El taller está en Calle 34 esquina 25, General Pico. Para entregas fuera de la ciudad, consultá directamente con Patricia por WhatsApp.</p>
+      </div>
+      <div class="faq-item reveal">
+        <h3 class="faq-q">¿Trabajás con grupos o pedidos mayoristas?</h3>
+        <p class="faq-a">Sí, Patricia trabaja con escuelas de danza, empresas y grupos. Consultá por volumen y plazos especiales.</p>
+      </div>
+      <div class="faq-item reveal reveal-d1">
+        <h3 class="faq-q">¿Qué pasa si la prenda no me queda bien?</h3>
+        <p class="faq-a">Los ajustes están incluidos. Si algo no te queda perfecto en la prueba, Patricia lo corrige sin costo adicional hasta que estés 100% satisfecha.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
+<!-- ═══════════════════════════════════
+     CONTACTO
+════════════════════════════════════ -->
+<section class="section contacto-section" id="contacto">
+  <div class="section-inner">
+    <p class="section-label reveal">Encontranos</p>
+    <h2 class="section-title reveal reveal-d1">Visitá el taller<br><em style="font-style:italic">o escribinos</em></h2>
+
+    <div class="contacto-grid">
+      <div class="reveal">
+        <div class="info-row">
+          <div class="info-icon">📍</div>
+          <div class="info-text">
+            <strong>Dirección</strong>
+            <span>Calle 34 esquina 25, General Pico, La Pampa</span>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">📱</div>
+          <div class="info-text">
+            <strong>WhatsApp · Patricia</strong>
+            <span>+54 9 2302 592608 — Responde personalmente</span>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">📸</div>
+          <div class="info-text">
+            <strong>Instagram &amp; Facebook</strong>
+            <span>@mitallercreaciones</span>
+          </div>
+        </div>
+
+        <table class="horarios-table">
+          <tr><td>Lunes a Viernes</td><td>9:00 – 18:00 hs</td></tr>
+          <tr><td>Sábados</td><td>9:00 – 13:00 hs</td></tr>
+          <tr><td>Feriados</td><td>Abierto ✦</td></tr>
+        </table>
+
+        <div class="map-placeholder" style="margin-top:24px;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--dk)" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <p style="font-size:13px;color:var(--dm);">Calle 34 esquina 25<br>General Pico, La Pampa</p>
+          <a href="https://maps.google.com/?q=Calle+34+esquina+25,+General+Pico,+La+Pampa,+Argentina" target="_blank" rel="noopener">Ver en Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="cta-box reveal reveal-d2" style="height:fit-content;">
+        <h3 class="cta-box-title">Escribile ahora</h3>
+        <p class="cta-box-sub">Patricia responde personalmente. Sin bots, sin demoras. Contale lo que necesitás y te asesora al instante.</p>
+
+        <a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20me%20gustaria%20consultar%20sobre%20sus%20servicios." target="_blank" rel="noopener" class="btn-wsp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Hablá con Patricia
+        </a>
+
+        <p class="cta-note">Lun–Vie 9–18 · Sáb 9–13 · Feriados abierto</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
 <footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <span class="footer-brand">Mi Taller Creaciones</span>
-        <span class="footer-brand-sub">Patricia B. Santos · Modista &amp; Diseñadora</span>
-        <p class="footer-desc">Alta costura, confección y arreglos artesanales con más de 15 años de experiencia. Cada prenda, una obra única hecha con pasión.</p>
-        <p class="footer-addr">📍 Calle 34 esq. 25 · General Pico, La Pampa<br>⏰ Lun–Vie 9–18 hs · Sáb 9–13 hs · Feriados abierto</p>
-      </div>
-      <div>
-        <span class="footer-h">Servicios</span>
-        <ul class="footer-ul">
-          <li><a href="#servicios">Alta Costura</a></li>
-          <li><a href="#servicios">Vestidos de Novia</a></li>
-          <li><a href="#servicios">Danza &amp; Espectáculo</a></li>
-          <li><a href="#servicios">Arreglos &amp; Retoques</a></li>
-          <li><a href="#servicios">Ropa Deportiva</a></li>
-          <li><a href="#servicios">Readaptaciones</a></li>
-        </ul>
-      </div>
-      <div>
-        <span class="footer-h">Navegación</span>
-        <ul class="footer-ul">
-          <li><a href="#reservas">Reservar Turno Gratis</a></li>
-          <li><a href="#testimonios">Testimonios</a></li>
-          <li><a href="#faq">Preguntas Frecuentes</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-          <li><a href="https://www.instagram.com/mitallercreaciones/" target="_blank">Instagram</a></li>
-          <li><a href="https://www.facebook.com/mitallercreaciones" target="_blank">Facebook</a></li>
-        </ul>
-      </div>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Mi Taller Creaciones</div>
+      <span class="footer-brand-sub">Patricia B. Santos · Alta Costura</span>
+      <p class="footer-desc">Modista profesional en General Pico, La Pampa. Más de 15 años creando prendas únicas con dedicación, arte y amor por el oficio.</p>
     </div>
-    <div class="footer-bottom">
-      <p>© 2025 Mi Taller Creaciones · Patricia B. Santos · General Pico, La Pampa · Todos los derechos reservados</p>
-      <div class="footer-socs">
-        <a href="https://www.instagram.com/mitallercreaciones/" target="_blank" class="footer-soc" title="Instagram">📷</a>
-        <a href="https://www.facebook.com/mitallercreaciones" target="_blank" class="footer-soc" title="Facebook">🔵</a>
-        <a href="https://wa.me/5492302592608" target="_blank" class="footer-soc" title="WhatsApp">💬</a>
-      </div>
+    <div>
+      <div class="footer-col-title">Servicios</div>
+      <ul class="footer-links">
+        <li><a href="#servicios">Alta Costura</a></li>
+        <li><a href="#servicios">Danza &amp; Espectáculo</a></li>
+        <li><a href="#servicios">Arreglos Profesionales</a></li>
+        <li><a href="#servicios">Ropa Deportiva</a></li>
+        <li><a href="#servicios">Readaptaciones</a></li>
+      </ul>
     </div>
+    <div>
+      <div class="footer-col-title">Contacto</div>
+      <ul class="footer-links">
+        <li><a href="https://wa.me/5492302592608" target="_blank" rel="noopener">WhatsApp</a></li>
+        <li><a href="https://www.instagram.com/mitallercreaciones" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://www.facebook.com/mitallercreaciones" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="#contacto">Dirección</a></li>
+        <li><a href="#faq">Preguntas Frecuentes</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Mi Taller Creaciones · Patricia B. Santos · General Pico, La Pampa</span>
+    <span class="footer-credits">Diseño web por Nexorus</span>
   </div>
 </footer>
 
-<!-- ══ FLOATING WA ══ -->
-<a href="https://wa.me/5492302592608?text=Hola%20Patricia!%20Vengo%20de%20la%20web%20y%20quisiera%20consultar%20%F0%9F%8C%B9"
-   target="_blank" class="wa-float" title="Escribile a Patricia">
-  <span class="wa-tip">¡Hablá con Patricia ahora!</span>
-  <div class="wa-btn">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-    </svg>
-  </div>
+<!-- ═══ FAB WhatsApp ═══ -->
+<a href="https://wa.me/5492302592608?text=Hola%20Patricia%2C%20quiero%20consultar%20sobre%20sus%20servicios." target="_blank" rel="noopener" class="fab-wsp" aria-label="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<!-- ══ BOOKING MODAL ══ -->
-<div class="modal-ov" id="bookModal">
-  <div class="modal-box">
-    <button class="modal-x" id="modalX">✕</button>
-    <div class="modal-ico">✅</div>
-    <h3>¡Turno Solicitado!</h3>
-    <p id="modalMsg">Confirmá por WhatsApp y guardá el recordatorio en tu Google Calendar para no olvidarte.</p>
-    <div class="modal-btns">
-      <a href="#" id="waLink" target="_blank" class="modal-btn-wa">💬 &nbsp;Confirmar por WhatsApp</a>
-      <a href="#" id="gcLink" target="_blank" class="modal-btn-gc">📅 &nbsp;Guardar en Calendar</a>
-    </div>
-  </div>
-</div>
-
+<!-- ═══ JAVASCRIPT ═══ -->
 <script>
-// ── Mobile menu
-const hamBtn=document.getElementById('hamBtn'),mobMenu=document.getElementById('mobMenu'),mobX=document.getElementById('mobX');
-hamBtn.addEventListener('click',()=>{mobMenu.classList.add('on');document.body.style.overflow='hidden'});
-mobX.addEventListener('click',closeMob);
-function closeMob(){mobMenu.classList.remove('on');document.body.style.overflow=''}
+// ── Scroll reveal ──
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+reveals.forEach(el => io.observe(el));
 
-// ── Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-64,behavior:'smooth'})}
-  });
-});
-
-// ── Fade-up observer
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
-},{threshold:0.07,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
-
-// ── FAQ accordion
-function toggleFaq(el){
-  document.querySelectorAll('.faq-item').forEach(i=>{if(i!==el)i.classList.remove('open')});
-  el.classList.toggle('open');
+// ── Counter animation ──
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  if(isNaN(target)) return;
+  const duration = 1800;
+  const start = performance.now();
+  function step(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * target) + (target >= 100 ? '+' : '');
+    if(progress < 1) requestAnimationFrame(step);
+    else el.textContent = target + '+';
+  }
+  requestAnimationFrame(step);
 }
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      animateCounter(e.target);
+      counterObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.hero-stat-n[data-target]').forEach(el => counterObserver.observe(el));
 
-// ── Min date
-const td=new Date();
-document.getElementById('fFecha').min=`${td.getFullYear()}-${String(td.getMonth()+1).padStart(2,'0')}-${String(td.getDate()).padStart(2,'0')}`;
-
-// ── Booking form
-document.getElementById('bookForm').addEventListener('submit',function(e){
-  e.preventDefault();
-  const nombre=document.getElementById('fNombre').value.trim();
-  const tel=document.getElementById('fTel').value.trim();
-  const servicio=document.getElementById('fServicio').value;
-  const fecha=document.getElementById('fFecha').value;
-  const hora=document.getElementById('fHora').value;
-  const notas=document.getElementById('fNotas').value.trim();
-
-  const [fY,fM,fD]=fecha.split('-');
-  const dObj=new Date(parseInt(fY),parseInt(fM)-1,parseInt(fD));
-  const fechaH=dObj.toLocaleDateString('es-AR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-
-  const wpMsg=encodeURIComponent(
-    `✨ *Solicitud de Turno — Mi Taller Creaciones* ✨\n\n`+
-    `👤 *Nombre:* ${nombre}\n`+
-    `📱 *Teléfono:* ${tel}\n`+
-    `✂️ *Servicio:* ${servicio}\n`+
-    `📅 *Fecha:* ${fechaH}\n`+
-    `⏰ *Hora:* ${hora} hs\n`+
-    (notas?`📝 *Notas:* ${notas}\n`:'')+
-    `\n¡Muchas gracias Patricia! Espero tu confirmación 🌹`
-  );
-  document.getElementById('waLink').href=`https://wa.me/5492302592608?text=${wpMsg}`;
-
-  const [hH,hM]=hora.split(':');
-  const sStr=`${fY}${fM}${fD}T${hH}${hM}00`;
-  const eH=String(parseInt(hH)+1).padStart(2,'0');
-  const eStr=`${fY}${fM}${fD}T${eH}${hM}00`;
-  const gcT=encodeURIComponent(`Turno Mi Taller Creaciones — ${servicio}`);
-  const gcD=encodeURIComponent(`Turno en Mi Taller Creaciones · Patricia B. Santos\n\nServicio: ${servicio}\n📍 Calle 34 esq. 25, General Pico, La Pampa\n📞 +54 9 2302 592608\n\n${notas?'Notas: '+notas+'\n\n':''}Primera consulta sin cargo.`);
-  document.getElementById('gcLink').href=`https://calendar.google.com/calendar/r/eventedit?text=${gcT}&dates=${sStr}/${eStr}&details=${gcD}&location=Calle%2034%20esq.%2025%2C%20General%20Pico%2C%20La%20Pampa`;
-
-  document.getElementById('modalMsg').textContent=`Turno solicitado para el ${fechaH} a las ${hora} hs. Confirmá por WhatsApp y guardá el evento en tu calendario.`;
-  document.getElementById('bookModal').classList.add('on');
+// ── Nav active ──
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if(window.scrollY > 60) nav.style.boxShadow = '0 4px 24px rgba(92,32,64,0.08)';
+  else nav.style.boxShadow = 'none';
 });
-
-// ── Close modal
-document.getElementById('modalX').addEventListener('click',()=>document.getElementById('bookModal').classList.remove('on'));
-document.getElementById('bookModal').addEventListener('click',e=>{if(e.target===document.getElementById('bookModal'))document.getElementById('bookModal').classList.remove('on')});
 </script>
 </body>
 </html>
